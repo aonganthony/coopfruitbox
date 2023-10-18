@@ -1,0 +1,14 @@
+﻿#div {
+    border: 1px solid #000;
+    position: absolute;
+}
+
+canvas {
+    border: 3px solid rgb(30, 163, 30);
+    padding: 0;
+    margin: auto;
+    display: block;
+    /* width: 800px; */
+    /* height: 600px; */
+    position: absolute;
+}
