@@ -12,8 +12,6 @@
 
   <ItemGroup>
     <None Include="wwwroot\src\globals.ts" />
-    <None Include="wwwroot\src\hello.ts" />
-    <None Include="wwwroot\src\index.ts" />
     <None Include="wwwroot\src\renderer.ts" />
     <None Include="wwwroot\src\types.ts" />
   </ItemGroup>

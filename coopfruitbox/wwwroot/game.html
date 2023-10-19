@@ -10,12 +10,14 @@
             margin: 0
         }
     </style>
-    <div id="selection-canvas" hidden></div>
-    <canvas id="game-canvas"></canvas>
-
+    <div id="canvas-container">
+        <canvas id="game-canvas"></canvas>
+        <div hidden id="selection-div"></div>
+    </div>
+    
     <script src="/dist/globals.js"></script>
     <script src="/dist/renderer.js"></script>
-    <script>start();</script>
+    <script>Renderer.trackMouseSelecting();</script>
 
     <link rel="stylesheet" type="text/css" href="style.css" />
 
