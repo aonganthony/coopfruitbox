@@ -10,10 +10,14 @@
             margin: 0
         }
     </style>
-    <div id="div" hidden></div>
-    <canvas id= "game-canvas"></canvas>
-    <script src="/js/app-client.js"></script>
+    <div id="selection-canvas" hidden></div>
+    <canvas id="game-canvas"></canvas>
+
+    <script src="/dist/globals.js"></script>
+    <script src="/dist/renderer.js"></script>
+    <script>start();</script>
+
     <link rel="stylesheet" type="text/css" href="style.css" />
-    <script>myApp.renderer.start()</script>
+
 </body>
 </html>

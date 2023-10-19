@@ -11,7 +11,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="ClientScript\webpack.config.js" />
+    <None Include="wwwroot\src\globals.ts" />
+    <None Include="wwwroot\src\hello.ts" />
+    <None Include="wwwroot\src\index.ts" />
+    <None Include="wwwroot\src\renderer.ts" />
+    <None Include="wwwroot\src\types.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.2.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

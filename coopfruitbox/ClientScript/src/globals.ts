@@ -1,2 +1,0 @@
-let gameCanvas: HTMLCanvasElement = document.getElementById("game-canvas") as HTMLCanvasElement;
-let selectionCanvas: HTMLCanvasElement = document.getElementById('selection-canvas') as HTMLCanvasElement;
