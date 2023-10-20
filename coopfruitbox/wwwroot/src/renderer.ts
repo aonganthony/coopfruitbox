@@ -1,4 +1,8 @@
 abstract class Renderer { 
+    public static drawGame() {
+
+    }
+
     public static trackMouseSelecting() {
         onmousedown = function (e) {
             selectionDiv.hidden = false;

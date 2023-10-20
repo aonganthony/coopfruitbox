@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
     <style>
@@ -10,16 +11,19 @@
             margin: 0
         }
     </style>
-    <div id="canvas-container">
+    <div hidden id="selection-div"></div>
+    <div class="canvas-container">
         <canvas id="game-canvas"></canvas>
-        <div hidden id="selection-div"></div>
+        <canvas id="ui-canvas"></canvas>
     </div>
-    
+
     <script src="/dist/globals.js"></script>
     <script src="/dist/renderer.js"></script>
-    <script>Renderer.trackMouseSelecting();</script>
+    <script>
+        Renderer.drawGame();
+        Renderer.trackMouseSelecting();
+    </script>
 
-    <link rel="stylesheet" type="text/css" href="style.css" />
 
 </body>
 </html>
