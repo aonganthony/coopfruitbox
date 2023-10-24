@@ -4,15 +4,14 @@ abstract class Renderer {
     }
 
     public static trackMouseSelecting() {
+        selectionArea = new MouseSelectionPos(0, 0, 0, 0, false);
         onmousedown = function (e) {
             selectionDiv.hidden = false;
-            pressedX = e.clientX;
-            pressedY = e.clientY;
+            selectionArea.initialPos = Helpers.getMousePosition(canvasContainer, e);
             Renderer.drawSelectionArea();
         }
         onmousemove = function (e) {
-            currX = e.clientX;
-            currY = e.clientY;
+            selectionArea.currentPos = Helpers.getMousePosition(canvasContainer, e);
             Renderer.drawSelectionArea();
         }
 
@@ -23,14 +22,11 @@ abstract class Renderer {
 
     public static drawSelectionArea() {
         // Update selectionCanvas
-        let x3 = Math.min(pressedX, currX) //Smaller X
-        let x4 = Math.max(pressedX, currX) //Larger X
-        let y3 = Math.min(pressedY, currY) //Smaller Y
-        let y4 = Math.max(pressedY, currY) //Larger Y
-        selectionDiv.style.left = x3 + 'px'
-        selectionDiv.style.top = y3 + 'px'
-        selectionDiv.style.width = x4 - x3 + 'px'
-        selectionDiv.style.height = y4 - y3 + 'px'
+        const [x1, y1, x2, y2] = selectionArea.getCoords();
+        selectionDiv.style.left = Math.min(x1, x2) + 'px' // Smaller X
+        selectionDiv.style.top = Math.min(y1, y2) + 'px' // Smaller Y
+        selectionDiv.style.width = Math.max(x1, x2) - Math.min(x1, x2) + 'px' 
+        selectionDiv.style.height = Math.max(y1, y2) - Math.min(y1, y2) + 'px'
     }
     
 }

@@ -13,7 +13,7 @@ body {
     position: absolute;
 }
 
-.canvas-container {
+#canvas-container {
     z-index: 0;
     display: flex;
     flex-direction: column;
@@ -23,7 +23,7 @@ body {
     position: absolute;
     background-color: white;
     left: 50%;
-    top: 50px;
+    top: 10%;
     transform: translateX(-50%);
 }
 
