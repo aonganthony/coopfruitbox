@@ -1,16 +1,10 @@
 ﻿html {
-    background-color: #5ccb34;
+    
 }
 
 body {
     margin: 0;
-}
-
-
-#selection-div {
-    z-index: 1;
-    border: 1px solid #000;
-    position: absolute;
+    background-color: #5ccb34;
 }
 
 #canvas-container {
@@ -21,7 +15,6 @@ body {
     width: 1000px;
     height: 800px;
     position: absolute;
-    background-color: white;
     left: 50%;
     top: 10%;
     transform: translateX(-50%);
@@ -29,13 +22,22 @@ body {
 
 
 #game-canvas {
+    z-index: 2;
     height: 900px;
     border: 2px solid green;
-    //background-color: red;
+
 }
 
 #ui-canvas {
+    z-index: 2;
     height: 100px;
     border: 2px solid blue;
-    //background-color:blue;
+
+}
+
+#selection-div {
+    z-index: 1;
+    background-color: lightblue;
+    border: 1px dotted black;
+    position: absolute;
 }

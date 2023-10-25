@@ -1,6 +1,8 @@
 abstract class Helpers {
     public static getMousePosition(canvas: HTMLCanvasElement, e: MouseEvent) {
         const rect: DOMRect = canvas.getBoundingClientRect() as DOMRect;
-        return new MousePosition(e.clientX - rect.left, e.clientY - rect.top);
+        let x = Math.min(Math.max(0, e.clientX - rect.left), rect.width - 8);
+        let y = Math.min(Math.max(0, e.clientY - rect.top), rect.height - 8);
+        return new MousePosition(x, y);
     }
 }
