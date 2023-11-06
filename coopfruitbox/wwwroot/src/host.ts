@@ -1,25 +1,28 @@
 import * as signalR from "@microsoft/signalr";
 
+
+console.log('here')
 const connection = new signalR.HubConnectionBuilder()
-    .withUrl("/hub")
+    .withUrl("/gameHub")
     .build();
 
 
-connection.on("receiveCursor", (cursorX, cursorY) => {
-    // Draw cursor onto canvas
-    gameCanvasContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height)
-
-    // Get the local x/y coordinates of the mouse on the canvas
-    let x = cursorX - gameCanvas.offsetLeft
-    let y = cursorY - gameCanvas.offsetTop
-
-    // Draw cursor image where the mouse is
-    gameCanvasContext.fillStyle = "rgba(255,255,255,0.5)";
-    gameCanvasContext.drawImage(cursorImage, cursorX, cursorY);
+connection.on("receiveCursor", (x: number, y: number) => {
+    console.log('updating with', x, y)
+    gameCanvasContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+    gameCanvasContext.beginPath();
+    gameCanvasContext.arc(x, y, 5, 0, Math.PI * 2, false)
+    gameCanvasContext.fillStyle = 'red'
+    gameCanvasContext.fill()
+    gameCanvasContext.drawImage(cursorImage, x, y);
 });
 
-connection.start();
+connection.start().catch((err: any) => console.log(err));
 
 gameCanvas.addEventListener("mousemove", (e: MouseEvent) => {
-    connection.send("displayCursor", e.clientX, e.clientY);
+    let mousePos: MousePosition = Helpers.getMousePosition(gameCanvas, e);
+    let x: number = mousePos.x;
+    let y: number = mousePos.y;
+    console.log(x, y, e.clientX, e.clientY)
+    connection.send("DisplayCursor", x, y);
 })
