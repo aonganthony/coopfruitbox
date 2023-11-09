@@ -1,6 +1,3 @@
-import * as signalR from "@microsoft/signalr";
-
-
 console.log('here')
 const connection = new signalR.HubConnectionBuilder()
     .withUrl("/gameHub")
