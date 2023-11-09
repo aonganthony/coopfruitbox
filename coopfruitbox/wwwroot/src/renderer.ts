@@ -3,6 +3,19 @@ abstract class Renderer {
 
     }
 
+    public static drawOtherMouse(x: number, y: number) {
+        gameCanvasContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+        gameCanvasContext.beginPath();
+        gameCanvasContext.arc(x, y, 5, 0, Math.PI * 2, false)
+        gameCanvasContext.fillStyle = 'red'
+        gameCanvasContext.fill()
+        gameCanvasContext.drawImage(cursorImage, x, y);
+    }
+
+    public static drawOtherSelectionArea() {
+
+    }
+
     public static trackMouseSelecting() {
         selectionArea = new MouseSelectionPos(0, 0, 0, 0, false);
         onmousedown = function (e) {

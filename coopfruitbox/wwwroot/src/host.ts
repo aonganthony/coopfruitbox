@@ -4,14 +4,9 @@ const connection = new signalR.HubConnectionBuilder()
     .build();
 
 
-connection.on("receiveCursor", (x: number, y: number) => {
-    console.log('updating with', x, y)
-    gameCanvasContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-    gameCanvasContext.beginPath();
-    gameCanvasContext.arc(x, y, 5, 0, Math.PI * 2, false)
-    gameCanvasContext.fillStyle = 'red'
-    gameCanvasContext.fill()
-    gameCanvasContext.drawImage(cursorImage, x, y);
+connection.on("receiveCursor", (x: number, y: number, down: boolean, up: boolean) => {
+    console.log('updating with', x, y);
+    Renderer.drawOtherMouse(x, y);
 });
 
 connection.start().catch((err: any) => console.log(err));
