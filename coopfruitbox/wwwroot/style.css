@@ -7,36 +7,40 @@ body {
     background-color: #5ccb34;
 }
 
+#canvas-container, #other-mouse-canvas, #game-canvas {
+    width: 1000px;
+    height: 600px;
+    position: absolute;
+}
+
 #canvas-container {
     z-index: 0;
-    display: flex;
-    flex-direction: column;
     border: 2px solid black;
-    width: 1000px;
-    height: 800px;
     position: absolute;
     left: 50%;
     top: 10%;
     transform: translateX(-50%);
 }
 
+#other-mouse-canvas {
+    z-index: 3;
+}
 
 #game-canvas {
     z-index: 2;
-    height: 900px;
-    border: 2px solid green;
 }
 
-#ui-canvas {
-    z-index: 2;
-    height: 100px;
-    border: 2px solid blue;
-
+#selection-div, #other-selection-div {
+    z-index: 1;
+    position: absolute;
 }
 
 #selection-div {
-    z-index: 1;
     background-color: lightblue;
     border: 1px dotted black;
-    position: absolute;
+}
+
+#other-selection-div {
+    background-color: indianred;
+    border: 1px dotted black;
 }

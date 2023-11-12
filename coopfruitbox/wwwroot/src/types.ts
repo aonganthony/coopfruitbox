@@ -10,12 +10,12 @@ class MousePosition {
 class MouseSelectionPos {
     public initialPos: MousePosition;
     public currentPos: MousePosition;
-    public selecting: boolean;
+    public hidden: boolean;
 
-    constructor(x1: number, y1: number, x2: number, y2: number, selecting: boolean) {
+    constructor(x1: number, y1: number, x2: number, y2: number, hidden: boolean) {
         this.initialPos = new MousePosition(x1, y1);
         this.currentPos = new MousePosition(x2, y2);
-        this.selecting = selecting;
+        this.hidden = hidden;
     }
 
     public getCoords() {

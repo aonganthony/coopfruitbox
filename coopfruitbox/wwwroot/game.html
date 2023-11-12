@@ -7,16 +7,17 @@
 </head>
 <body>
     <div id="canvas-container">
+        <canvas id="other-mouse-canvas"></canvas>
         <canvas id="game-canvas"></canvas>
-        <canvas id="ui-canvas"></canvas>
         <div hidden id="selection-div"></div>
+        <div hidden id="other-selection-div"></div>
     </div>
 
     <script src="signalr.js"></script>
 
     <script src="/dist/globals.js"></script>
     <script src="/dist/helper.js"></script>
-    <script type ="module" src="/dist/host.js"></script>
+    <script src="/dist/host.js"></script>
     <script src="/dist/renderer.js"></script>
     <script src="/dist/types.js"></script>
 

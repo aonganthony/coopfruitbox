@@ -11,7 +11,7 @@ namespace coopfruitbox.Hubs
     {
         public async Task DisplayCursor(int x, int y, bool down, bool up)
         {
-            await Clients.Others.receiveCursor(x, y);
+            await Clients.Others.receiveCursor(x, y, down, up);
         }
     }
 }
