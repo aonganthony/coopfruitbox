@@ -1,11 +1,30 @@
 abstract class Renderer { 
     public static drawGame() {
+        
+        gameCanvasContext.beginPath();
+        gameCanvasContext.arc(50, 50, 15, 0, Math.PI * 2, false)
+        gameCanvasContext.fillStyle = 'red'
+        gameCanvasContext.fill()
+        Renderer.drawFruits(10, 17);
+    }
 
+    /* Draws rows * cols number of fruits in gameCanvas. Max 170.*/
+    public static drawFruits(rows: number, cols: number) {
+        let xOffset = 50;
+        let yOffset = 50;
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < cols; j++) {
+                let rand = 1;
+                let fruit = new Fruit(rand, xOffset + 50 * j, yOffset + 50 * i);
+                fruit.draw(false);
+                fruits.add(fruit);
+            }
+        }
     }
 
     public static trackMouseSelecting() {
-        selectionArea = new MouseSelectionPos(0, 0, 0, 0, false);
-        otherSelectionArea = new MouseSelectionPos(0, 0, 0, 0, false);
+        selectionArea = new MouseSelectionArea(0, 0, 0, 0, false);
+        otherSelectionArea = new MouseSelectionArea(0, 0, 0, 0, false);
         onmousedown = function (e) {
             let pos = Helpers.getMousePosition(canvasContainer, e);
             selectionArea.hidden = false;
@@ -19,7 +38,6 @@ abstract class Renderer {
             Renderer.drawSelectionArea(selectionDiv, selectionArea);
             connection.send("DisplayCursor", pos.x, pos.y, false, false);
         }
-
         onmouseup = function (e) {
             let pos = Helpers.getMousePosition(canvasContainer, e);
             selectionArea.hidden = true;
@@ -27,7 +45,7 @@ abstract class Renderer {
         }
     }
 
-    public static drawSelectionArea(div: HTMLCanvasElement, area: MouseSelectionPos) {
+    public static drawSelectionArea(div: HTMLCanvasElement, area: MouseSelectionArea) {
         // Update selectionDiv
         const [x1, y1, x2, y2] = area.getCoords();
         div.hidden = area.hidden;

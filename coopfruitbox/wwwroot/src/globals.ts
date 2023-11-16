@@ -10,12 +10,24 @@ let gameCanvasContext: CanvasRenderingContext2D = gameCanvas.getContext("2d") as
 gameCanvas.width = gameCanvas.offsetWidth;
 gameCanvas.height = gameCanvas.offsetHeight;
 
-
 let selectionDiv: HTMLCanvasElement = document.getElementById('selection-div') as HTMLCanvasElement;
-let selectionArea: MouseSelectionPos;
+let selectionArea: MouseSelectionArea;
 
 let otherSelectionDiv: HTMLCanvasElement = document.getElementById('other-selection-div') as HTMLCanvasElement;
-let otherSelectionArea: MouseSelectionPos;
+let otherSelectionArea: MouseSelectionArea;
 
 let cursorImage: HTMLImageElement = new Image();
-cursorImage.src = "cursor.png";
+cursorImage.src = "images/cursor.png";
+
+let a1: HTMLImageElement = new Image();
+a1.src = "images/a1.png";
+let a2: HTMLImageElement = new Image();
+a2.src = "images/a2.png";
+let a3: HTMLImageElement = new Image();
+a3.src = "images/a3.png";
+let highlight: HTMLImageElement = new Image();
+highlight.src = "images/highlight.png";
+
+let fruit_radius = 48;
+let fruits = new Set();
+let selected = new Set();

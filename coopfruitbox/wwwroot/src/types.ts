@@ -7,7 +7,7 @@ class MousePosition {
         this.y = y;
     }
 }
-class MouseSelectionPos {
+class MouseSelectionArea {
     public initialPos: MousePosition;
     public currentPos: MousePosition;
     public hidden: boolean;
@@ -24,8 +24,27 @@ class MouseSelectionPos {
     }
 }
 
+class Fruit {
+    public value: number;
+    public x: number;
+    public y: number;
+    public selected: boolean;
+    public defaultImage: HTMLImageElement;
 
-class ClientDataObject {
-    public mouseSelectionPos!: MouseSelectionPos;
-    
+    constructor(value: number, x: number, y: number) {
+        this.value = value;
+        this.x = x;
+        this.y = y;
+        this.selected = false;
+        /* Assign images based on value here */
+        this.defaultImage = a1;
+    }
+
+    public draw(highlighted: boolean) {
+        gameCanvasContext.clearRect(this.x, this.y, fruit_radius, fruit_radius);
+        if (highlighted) {
+            gameCanvasContext.drawImage(highlight, this.x, this.y, fruit_radius, fruit_radius);
+        }
+        gameCanvasContext.drawImage(this.defaultImage, this.x, this.y, fruit_radius, fruit_radius);
+    }
 }
