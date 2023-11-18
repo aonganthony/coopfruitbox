@@ -10,13 +10,13 @@ abstract class Renderer {
 
     /* Draws rows * cols number of fruits in gameCanvas. Max 170.*/
     public static drawFruits(rows: number, cols: number) {
-        let xOffset = 50;
-        let yOffset = 50;
+        let xOffset = 0;
+        let yOffset = 0;
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
                 let rand = 1;
                 let fruit = new Fruit(rand, xOffset + 50 * j, yOffset + 50 * i);
-                fruit.draw(false);
+                fruit.draw();
                 fruits.add(fruit);
             }
         }
@@ -36,23 +36,30 @@ abstract class Renderer {
             let pos = Helpers.getMousePosition(canvasContainer, e);
             selectionArea.currentPos = pos
             Renderer.drawSelectionArea(selectionDiv, selectionArea);
+            if (selectionArea.hidden == false) {
+                fruits.forEach(Helpers.highlightFruit);
+            }
+
+
             connection.send("DisplayCursor", pos.x, pos.y, false, false);
         }
         onmouseup = function (e) {
             let pos = Helpers.getMousePosition(canvasContainer, e);
             selectionArea.hidden = true;
+            selectionArea.initialPos = selectionArea.currentPos;
+            fruits.forEach(Helpers.highlightFruit);
             connection.send("DisplayCursor", pos.x, pos.y, false, true);
         }
     }
 
     public static drawSelectionArea(div: HTMLCanvasElement, area: MouseSelectionArea) {
         // Update selectionDiv
-        const [x1, y1, x2, y2] = area.getCoords();
+        const [x1, x2, y1, y2] = area.getCoordsInOrder();
         div.hidden = area.hidden;
-        div.style.left = Math.min(x1, x2) + 'px' // Smaller X
-        div.style.top = Math.min(y1, y2) + 'px' // Smaller Y
-        div.style.width = Math.max(x1, x2) - Math.min(x1, x2) + 'px'
-        div.style.height = Math.max(y1, y2) - Math.min(y1, y2) + 'px'
+        div.style.left = x1 + 'px'
+        div.style.top = y1 + 'px' 
+        div.style.width = x2 - x1 + 'px'
+        div.style.height = y2 - y1 + 'px'
     }
 
     public static drawOtherMouse(pos: MousePosition) {

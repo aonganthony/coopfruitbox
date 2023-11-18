@@ -22,12 +22,20 @@ class MouseSelectionArea {
         return [this.initialPos.x, this.initialPos.y,
                 this.currentPos.x, this.currentPos.y];
     }
+
+    public getCoordsInOrder() {
+        let [x1, y1, x2, y2] = this.getCoords();
+        return [Math.min(x1, x2), Math.max(x1, x2), Math.min(y1, y2), Math.max(y1, y2)]
+        // Returns small X, large X, small Y, large Y
+    }
 }
 
 class Fruit {
     public value: number;
     public x: number;
     public y: number;
+    public center_x;
+    public center_y;
     public selected: boolean;
     public defaultImage: HTMLImageElement;
 
@@ -35,14 +43,16 @@ class Fruit {
         this.value = value;
         this.x = x;
         this.y = y;
+        this.center_x = x + fruit_radius / 2;
+        this.center_y = y + fruit_radius / 2;
         this.selected = false;
         /* Assign images based on value here */
         this.defaultImage = a1;
     }
 
-    public draw(highlighted: boolean) {
+    public draw() {
         gameCanvasContext.clearRect(this.x, this.y, fruit_radius, fruit_radius);
-        if (highlighted) {
+        if (this.selected) {
             gameCanvasContext.drawImage(highlight, this.x, this.y, fruit_radius, fruit_radius);
         }
         gameCanvasContext.drawImage(this.defaultImage, this.x, this.y, fruit_radius, fruit_radius);
