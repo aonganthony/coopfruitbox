@@ -17,37 +17,31 @@ abstract class Renderer {
                 let rand = 1;
                 let fruit = new Fruit(rand, xOffset + 50 * j, yOffset + 50 * i);
                 fruit.draw();
-                fruits.add(fruit);
+                fruits.push(fruit);
             }
         }
     }
 
     public static trackMouseSelecting() {
-        selectionArea = new MouseSelectionArea(0, 0, 0, 0, false);
-        otherSelectionArea = new MouseSelectionArea(0, 0, 0, 0, false);
+        selectionArea = new MouseSelectionArea(0, 0, 0, 0, true);
+        otherSelectionArea = new MouseSelectionArea(0, 0, 0, 0, true);
+
         onmousedown = function (e) {
             let pos = Helpers.getMousePosition(canvasContainer, e);
-            selectionArea.hidden = false;
-            selectionArea.initialPos = pos
+            Helpers.mouseDown(pos, selectionArea);
             Renderer.drawSelectionArea(selectionDiv, selectionArea);
             connection.send("DisplayCursor", pos.x, pos.y, true, false);
         }
         onmousemove = function (e) {
             let pos = Helpers.getMousePosition(canvasContainer, e);
-            selectionArea.currentPos = pos
-            Renderer.drawSelectionArea(selectionDiv, selectionArea);
-            if (selectionArea.hidden == false) {
-                fruits.forEach(Helpers.highlightFruit);
-            }
-
-
+            Helpers.mouseMove(pos, selectionArea);
+            Renderer.drawSelectionArea(selectionDiv, selectionArea)
             connection.send("DisplayCursor", pos.x, pos.y, false, false);
         }
         onmouseup = function (e) {
             let pos = Helpers.getMousePosition(canvasContainer, e);
-            selectionArea.hidden = true;
-            selectionArea.initialPos = selectionArea.currentPos;
-            fruits.forEach(Helpers.highlightFruit);
+            Helpers.mouseUp(pos, selectionArea);
+            Renderer.drawSelectionArea(selectionDiv, selectionArea)
             connection.send("DisplayCursor", pos.x, pos.y, false, true);
         }
     }

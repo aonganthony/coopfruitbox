@@ -5,18 +5,19 @@ const connection = new signalR.HubConnectionBuilder()
 
 
 connection.on("receiveCursor", (x: number, y: number, down: boolean, up: boolean) => {
-    console.log('updating with', x, y);
+    console.log('updating with', x, y, down, up);
     let pos = new MousePosition(x, y);
     if (down) {
-        otherSelectionArea.hidden = false;
-        otherSelectionArea.initialPos = pos;
+        Helpers.mouseDown(pos, otherSelectionArea);
+        Renderer.drawSelectionArea(otherSelectionDiv, otherSelectionArea);
     } else if (up) {
-        otherSelectionArea.hidden = true;
+        Helpers.mouseUp(pos, otherSelectionArea);
+        Renderer.drawSelectionArea(otherSelectionDiv, otherSelectionArea)
     } else {
-        otherSelectionArea.currentPos = pos;
+        Helpers.mouseMove(pos, otherSelectionArea);
+        Renderer.drawSelectionArea(otherSelectionDiv, otherSelectionArea)
     }
     Renderer.drawOtherMouse(pos);
-    Renderer.drawSelectionArea(otherSelectionDiv, otherSelectionArea);
 });
 
 connection.start().catch((err: any) => console.log(err));

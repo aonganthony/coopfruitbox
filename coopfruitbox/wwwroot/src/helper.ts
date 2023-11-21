@@ -6,9 +6,43 @@ abstract class Helpers {
         return new MousePosition(Math.round(x), Math.round(y));
     }
 
+    public static fruitInArea(f: Fruit, area: MouseSelectionArea) {
+        let center_x = f.x + fruit_radius / 2;
+        let center_y = f.y + fruit_radius / 2;
+        let [x1, x2, y1, y2] = area.getCoordsInOrder();
+        return (x1 < center_x && center_x < x2 && y1 < center_y && center_y < y2) 
+    }
+
     public static highlightFruit(f: Fruit) {
-        const [x1, x2, y1, y2] = selectionArea.getCoordsInOrder();
-        f.selected = (x1 < f.center_x && f.center_x < x2 && y1 < f.center_y && f.center_y < y2)
+        f.selected = Helpers.fruitInArea(f, selectionArea);
+        f.selectedByOther = Helpers.fruitInArea(f, otherSelectionArea);
         f.draw();
+    }
+
+    public static mouseDown(pos: MousePosition, area: MouseSelectionArea) {
+        area.hidden = false;
+        area.initialPos = pos;
+        area.currentPos = pos;
+    }
+
+    public static mouseMove(pos: MousePosition, area: MouseSelectionArea) {
+        if (area.hidden) {
+            area.initialPos = pos;
+        }
+        area.currentPos = pos;
+        if (!area.hidden) {
+            fruits.forEach(Helpers.highlightFruit);
+        }
+    }
+
+    public static mouseUp(pos: MousePosition, area: MouseSelectionArea) {
+        area.hidden = true;
+        area.initialPos = pos;
+        area.currentPos = pos;
+        for (const f of fruits) {
+            if (f.selected || f.selectedByOther) { // if selected sum up to 10
+                f.clear();
+            }
+        }
     }
 }

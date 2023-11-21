@@ -29,5 +29,5 @@ let highlight: HTMLImageElement = new Image();
 highlight.src = "images/highlight.png";
 
 let fruit_radius = 48;
-let fruits = new Set();
+let fruits: Fruit[] = [];
 let selected = new Set();

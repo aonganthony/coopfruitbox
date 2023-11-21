@@ -34,27 +34,35 @@ class Fruit {
     public value: number;
     public x: number;
     public y: number;
-    public center_x;
-    public center_y;
     public selected: boolean;
+    public selectedByOther: boolean;
+    public cleared: boolean;
     public defaultImage: HTMLImageElement;
 
     constructor(value: number, x: number, y: number) {
         this.value = value;
         this.x = x;
         this.y = y;
-        this.center_x = x + fruit_radius / 2;
-        this.center_y = y + fruit_radius / 2;
         this.selected = false;
+        this.selectedByOther = false;
+        this.cleared = false;
         /* Assign images based on value here */
         this.defaultImage = a1;
     }
 
     public draw() {
+        if (this.cleared) { 
+            return
+        }
         gameCanvasContext.clearRect(this.x, this.y, fruit_radius, fruit_radius);
-        if (this.selected) {
+        if (this.selected || this.selectedByOther) {
             gameCanvasContext.drawImage(highlight, this.x, this.y, fruit_radius, fruit_radius);
         }
         gameCanvasContext.drawImage(this.defaultImage, this.x, this.y, fruit_radius, fruit_radius);
+    }
+
+    public clear() {
+        gameCanvasContext.clearRect(this.x, this.y, fruit_radius, fruit_radius);
+        this.cleared = true;
     }
 }
