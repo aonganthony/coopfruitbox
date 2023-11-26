@@ -6,6 +6,9 @@
 # Compiled JS files
 dist/
 
+# Properties
+Properties/
+
 # User-specific files
 *.rsuser
 *.suo

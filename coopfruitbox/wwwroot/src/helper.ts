@@ -39,10 +39,22 @@ abstract class Helpers {
         area.hidden = true;
         area.initialPos = pos;
         area.currentPos = pos;
+        let s = 0;
         for (const f of fruits) {
-            if (f.selected || f.selectedByOther) { // if selected sum up to 10
-                f.clear();
+            if ((f.selected || f.selectedByOther) && !f.cleared) {
+                s += f.value;
             }
         }
+
+        if (s == 10) {
+            for (const f of fruits) {
+                if ((f.selected || f.selectedByOther)) { // if selected sum up to 10
+                    f.clear();
+                }
+            }
+        } else {
+            fruits.forEach(Helpers.highlightFruit);
+        }
+
     }
 }

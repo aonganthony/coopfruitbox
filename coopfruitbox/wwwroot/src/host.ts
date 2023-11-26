@@ -9,15 +9,13 @@ connection.on("receiveCursor", (x: number, y: number, down: boolean, up: boolean
     let pos = new MousePosition(x, y);
     if (down) {
         Helpers.mouseDown(pos, otherSelectionArea);
-        Renderer.drawSelectionArea(otherSelectionDiv, otherSelectionArea);
     } else if (up) {
         Helpers.mouseUp(pos, otherSelectionArea);
-        Renderer.drawSelectionArea(otherSelectionDiv, otherSelectionArea)
     } else {
         Helpers.mouseMove(pos, otherSelectionArea);
-        Renderer.drawSelectionArea(otherSelectionDiv, otherSelectionArea)
     }
     Renderer.drawOtherMouse(pos);
+    Renderer.drawSelectionArea(otherSelectionDiv, otherSelectionArea);
 });
 
 connection.start().catch((err: any) => console.log(err));

@@ -28,6 +28,7 @@ a3.src = "images/a3.png";
 let highlight: HTMLImageElement = new Image();
 highlight.src = "images/highlight.png";
 
-let fruit_radius = 48;
+let fruit_radius: number = 48;
+let goal: number = 10;
 let fruits: Fruit[] = [];
 let selected = new Set();
