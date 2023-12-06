@@ -1,17 +1,31 @@
-﻿using Microsoft.AspNetCore.SignalR;
-public interface IChatClient
+﻿using coopfruitbox.Services;
+using Microsoft.AspNetCore.SignalR;
+public interface IGameHub
 {
-    Task receiveCursor(int x, int y, bool down, bool up);
-    // Task receiveFruitsHighlighted();
+    Task ReceiveCursor(int x, int y, bool down, bool up);
+    // TODO: separate ReceiveCursor into ReceiveMove, ReceivePress, ReceiveDepress
 }
 
 namespace coopfruitbox.Hubs
 {
-    public class GameHub : Hub<IChatClient>
+    public class GameHub : Hub<IGameHub>
     {
+        private readonly IGameService _gameService;
+
+        public GameHub(IGameService gameService)
+        {
+            _gameService = gameService;
+        }
+
         public async Task DisplayCursor(int x, int y, bool down, bool up)
         {
-            await Clients.Others.receiveCursor(x, y, down, up);
+            await Clients.Others.ReceiveCursor(x, y, down, up);
+        }
+
+        public string CreateLobby()
+        {
+            string gameID = _gameService.CreateLobby(Context.ConnectionId);
+            return gameID;
         }
     }
 }

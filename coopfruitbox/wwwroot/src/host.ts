@@ -5,7 +5,7 @@ const connection = new signalR.HubConnectionBuilder()
 
 
 connection.on("receiveCursor", (x: number, y: number, down: boolean, up: boolean) => {
-    console.log('updating with', x, y, down, up);
+    // console.log('updating with', x, y, down, up);
     let pos = new MousePosition(x, y);
     if (down) {
         Helpers.mouseDown(pos, otherSelectionArea);
