@@ -24,7 +24,9 @@ namespace coopfruitbox.Hubs
 
         public string CreateLobby()
         {
+            Console.WriteLine("here in gamehub");
             string gameID = _gameService.CreateLobby(Context.ConnectionId);
+            Console.WriteLine(gameID);
             return gameID;
         }
     }

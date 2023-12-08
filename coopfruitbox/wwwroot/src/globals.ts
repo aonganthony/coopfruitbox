@@ -1,3 +1,10 @@
+let connection: any;
+
+const overlay: HTMLElement = document.getElementById("overlay") as HTMLElement;
+const playButton: HTMLButtonElement = document.getElementById("play-button") as HTMLButtonElement;
+const createLobbyButton: HTMLButtonElement = document.getElementById("create-lobby-button") as HTMLButtonElement;
+const lobbyLinkText: HTMLElement = document.getElementById("lobby-link-text") as HTMLElement;
+
 let canvasContainer: HTMLCanvasElement = document.getElementById("canvas-container") as HTMLCanvasElement;
 
 let otherMouseCanvas: HTMLCanvasElement = document.getElementById("other-mouse-canvas") as HTMLCanvasElement;
