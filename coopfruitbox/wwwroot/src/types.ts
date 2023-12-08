@@ -1,3 +1,9 @@
+enum MouseEventType {
+    Down,
+    Move,
+    Up
+}
+
 class MousePosition {
     public x: number;
     public y: number;

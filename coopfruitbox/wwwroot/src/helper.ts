@@ -1,4 +1,24 @@
 abstract class Helpers {
+    public static sendCursor(e: MouseEvent, mouseType: MouseEventType) {
+        let pos = Helpers.getMousePosition(canvasContainer, e);
+        let down = false, up = false;
+        switch (mouseType) {
+            case MouseEventType.Down:
+                Helpers.mouseDown(pos, selectionArea);
+                down = true;
+                break;
+            case MouseEventType.Move:
+                Helpers.mouseMove(pos, selectionArea);
+                break;
+            case MouseEventType.Up:
+                Helpers.mouseUp(pos, selectionArea);
+                up = true;
+                break;
+        }
+        Renderer.drawSelectionArea(selectionDiv, selectionArea);
+        connection.send("DisplayCursor", pos.x, pos.y, down, up);
+    }
+
     public static getMousePosition(canvas: HTMLCanvasElement, e: MouseEvent) {
         const rect: DOMRect = canvas.getBoundingClientRect() as DOMRect;
         let x = Math.min(Math.max(0, e.clientX - rect.left), rect.width - 8);

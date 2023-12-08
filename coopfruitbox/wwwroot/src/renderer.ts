@@ -25,25 +25,9 @@ abstract class Renderer {
     public static trackMouseSelecting() {
         selectionArea = new MouseSelectionArea(0, 0, 0, 0, true);
         otherSelectionArea = new MouseSelectionArea(0, 0, 0, 0, true);
-
-        onmousedown = function (e) {
-            let pos = Helpers.getMousePosition(canvasContainer, e);
-            Helpers.mouseDown(pos, selectionArea);
-            Renderer.drawSelectionArea(selectionDiv, selectionArea);
-            connection.send("DisplayCursor", pos.x, pos.y, true, false);
-        }
-        onmousemove = function (e) {
-            let pos = Helpers.getMousePosition(canvasContainer, e);
-            Helpers.mouseMove(pos, selectionArea);
-            Renderer.drawSelectionArea(selectionDiv, selectionArea)
-            connection.send("DisplayCursor", pos.x, pos.y, false, false);
-        }
-        onmouseup = function (e) {
-            let pos = Helpers.getMousePosition(canvasContainer, e);
-            Helpers.mouseUp(pos, selectionArea);
-            Renderer.drawSelectionArea(selectionDiv, selectionArea)
-            connection.send("DisplayCursor", pos.x, pos.y, false, true);
-        }
+        onmousedown = function (e) { Helpers.sendCursor(e, MouseEventType.Down); }
+        onmousemove = function (e) { Helpers.sendCursor(e, MouseEventType.Move); }
+        onmouseup = function (e) { Helpers.sendCursor(e, MouseEventType.Up); }
     }
 
     public static drawSelectionArea(div: HTMLCanvasElement, area: MouseSelectionArea) {
