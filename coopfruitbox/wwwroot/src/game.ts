@@ -31,17 +31,25 @@ abstract class Game {
     }
 
     public static createLobby() {
+        var lobbyCode;
         connection.invoke("CreateLobby").then(
-            (lobbyCode: string) => {
+            (code: string) => {
+                lobbyCode = code;
                 lobbyLinkText.innerText = `Invite Link: https://localhost:7140/?${lobbyCode}`;
             });
         playButton.style.display = "none";
         createLobbyButton.style.display = "none";
+        connection.invoke("JoinLobby", lobbyCode, true);
     }
 
-    public static getCodeFromLink() {
-        var delimiterValue = window.location.search.substring(1);
-        console.log(delimiterValue);
+    public static joinLobbyFromCode() {
+        var lobbyCode = window.location.search.substring(1);
+        if (lobbyCode.length == 8) { // verify string
+            connection.invoke("JoinLobby", lobbyCode)
+        } else {
+            // error prompt, lobby does not exist
+        }
+        console.log(lobbyCode);
     }
 
     public static hideOverlay() {
