@@ -16,7 +16,7 @@ abstract class Helpers {
                 break;
         }
         Renderer.drawSelectionArea(selectionDiv, selectionArea);
-        connection.send("DisplayCursor", pos.x, pos.y, down, up);
+        connection.send("DisplayCursor", lobbyID, pos.x, pos.y, down, up);
     }
 
     public static getMousePosition(canvas: HTMLCanvasElement, e: MouseEvent) {

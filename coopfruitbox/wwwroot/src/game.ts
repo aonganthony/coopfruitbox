@@ -1,10 +1,16 @@
 abstract class Game {
-    public static startConnection() {
+    public static async startConnection() {
         connection = new signalR.HubConnectionBuilder()
             .withUrl("/gameHub")
             .build();
 
-        connection.on("receiveCursor", (x: number, y: number, down: boolean, up: boolean) => {
+        await connection.start().catch((err: any) => console.log(err));
+
+        connection.on("StartGame", () => {
+            Game.resetGame();
+        });
+
+        connection.on("ReceiveCursor", (x: number, y: number, down: boolean, up: boolean) => {
             // console.log('updating with', x, y, down, up);
             let pos = new MousePosition(x, y);
             if (down) {
@@ -18,10 +24,17 @@ abstract class Game {
             Renderer.drawSelectionArea(otherSelectionDiv, otherSelectionArea);
         });
 
-        connection.start().catch((err: any) => console.log(err));
+        var delimiterValue = window.location.search.substring(1);
+        if (delimiterValue.length == 8) { // TODO: verify string
+            lobbyID = delimiterValue;
+            connection.invoke("JoinLobby", lobbyID, true)
+        } else {
+            // TODO: error prompt, lobby does not exist
+        }
     }
 
     public static resetGame() {
+        Renderer.hideOverlay();
         Renderer.drawGame();
         Renderer.trackMouseSelecting();
     }
@@ -30,41 +43,22 @@ abstract class Game {
 
     }
 
-    public static createLobby() {
-        var lobbyCode;
+    public static async createLobby() {
         connection.invoke("CreateLobby").then(
-            (code: string) => {
-                lobbyCode = code;
-                lobbyLinkText.innerText = `Invite Link: https://localhost:7140/?${lobbyCode}`;
+            (gameID: string) => {
+                lobbyID = gameID;
+                lobbyLinkText.innerText = `Invite Link: https://localhost:7140/?${lobbyID}`;
+                playButton.style.display = "none";
+                createLobbyButton.style.display = "none";
+                connection.invoke("JoinLobby", lobbyID, false);
             });
-        playButton.style.display = "none";
-        createLobbyButton.style.display = "none";
-        connection.invoke("JoinLobby", lobbyCode, true);
-    }
-
-    public static joinLobbyFromCode() {
-        var lobbyCode = window.location.search.substring(1);
-        if (lobbyCode.length == 8) { // verify string
-            connection.invoke("JoinLobby", lobbyCode)
-        } else {
-            // error prompt, lobby does not exist
-        }
-        console.log(lobbyCode);
-    }
-
-    public static hideOverlay() {
-        playButton.style.display = "none";
-        createLobbyButton.style.display = "none";
     }
 }
 
 playButton.addEventListener("click", (): void => {
     Game.resetGame();
-    Game.hideOverlay();
 });
 
 createLobbyButton.addEventListener("click", (): void => {
-    console.log('here');
     Game.createLobby();
-
 })

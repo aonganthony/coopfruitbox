@@ -1,4 +1,5 @@
 let connection: any;
+let lobbyID: string;
 
 const overlay: HTMLElement = document.getElementById("overlay") as HTMLElement;
 const playButton: HTMLButtonElement = document.getElementById("play-button") as HTMLButtonElement;

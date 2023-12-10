@@ -8,6 +8,7 @@ namespace coopfruitbox.Services;
 public interface IGameService
 {
     string CreateLobby(string hostConnectionID);
+    void UpdateClientID(string lobbyCode, string clientConnectionID);
 
 }
 public class GameService: IGameService
@@ -41,13 +42,21 @@ public class GameService: IGameService
         connection.Open();
 
         var lobbyCode = GenerateLobbyCode(); // random 8 letters, caps sensitive
-        Console.WriteLine(lobbyCode);
         var cmdstring = string.Format("INSERT INTO Lobbies (Lobbycode, HostUserID, ClientUserID, CreationTime) VALUES ('{0}', '{1}', null, NOW())", lobbyCode, hostConnectionID);
         var command = new NpgsqlCommand(cmdstring, connection);
-        Console.WriteLine(cmdstring);
         command.ExecuteNonQuery();
 
         // return lobbyCode
         return lobbyCode;
+    }
+
+    public void UpdateClientID(string lobbyCode, string clientConnectionID)
+    {
+        var connection = new NpgsqlConnection(_connectionString);
+        connection.Open();
+
+        var cmdstring = string.Format("UPDATE Lobbies SET ClientUserID = '{1}' WHERE LobbyCode = '{0}'", lobbyCode, clientConnectionID);
+        var command = new NpgsqlCommand(cmdstring, connection); 
+        command.ExecuteNonQuery();
     }
 }

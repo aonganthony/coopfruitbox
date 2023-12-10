@@ -8,6 +8,10 @@ abstract class Renderer {
         Renderer.drawFruits(10, 17);
     }
 
+    public static hideOverlay() {
+        overlay.style.display = "none";
+    }
+
     /* Draws rows * cols number of fruits in gameCanvas. Max 170.*/
     public static drawFruits(rows: number, cols: number) {
         let xOffset = 0;

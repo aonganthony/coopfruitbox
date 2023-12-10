@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.SignalR;
 public interface IGameHub
 {
     Task ReceiveCursor(int x, int y, bool down, bool up);
-    Task JoinLobby(string lobbyCode, bool host);
+    Task JoinLobby(string lobbyCode, bool client);
+    Task StartGame();
     // TODO: separate ReceiveCursor into ReceiveMove, ReceivePress, ReceiveDepress
 }
 
@@ -18,32 +19,27 @@ namespace coopfruitbox.Hubs
             _gameService = gameService;
         }
 
-        public async Task DisplayCursor(int x, int y, bool down, bool up)
+        public async Task DisplayCursor(string lobbyID, int x, int y, bool down, bool up)
         {
             // pass in lobbycode as group name
             // await Clients.OthersInGroup(lobbyCode).ReceiveCursor(...)
-
-            await Clients.Others.ReceiveCursor(x, y, down, up);
+            await Clients.OthersInGroup(lobbyID).ReceiveCursor(x, y, down, up);
         }
 
         public string CreateLobby()
         {
-            Console.WriteLine("here in gamehub");
             string lobbyCode = _gameService.CreateLobby(Context.ConnectionId);
-            Console.WriteLine(lobbyCode);
+            Console.WriteLine(String.Format("Lobby {0} created by gameService", lobbyCode));
             return lobbyCode;
         }
 
-        public void JoinLobby(string lobbyCode, bool host)
+        public async Task JoinLobby(string lobbyCode, bool client)
         {
-            // verify lobbyCode is real lobby
-            if (host) {
-                // insert Context.ConnectionID to hostID column
+            await Groups.AddToGroupAsync(Context.ConnectionId, lobbyCode);
+            if (client) {
+                _gameService.UpdateClientID(lobbyCode, Context.ConnectionId);
+                await Clients.Group(lobbyCode).StartGame();
             }
-            else {
-                // insert into clientID column
-            }
-            Groups.AddToGroupAsync(Context.ConnectionId, lobbyCode);
         }
     }
 }
