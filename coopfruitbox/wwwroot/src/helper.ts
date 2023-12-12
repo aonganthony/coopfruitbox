@@ -47,10 +47,10 @@ abstract class Helpers {
 
     public static mouseMove(pos: MousePosition, area: MouseSelectionArea) {
         if (area.hidden) {
-            area.initialPos = pos;
+            // area.initialPos = pos;
         }
-        area.currentPos = pos;
         if (!area.hidden) {
+            area.currentPos = pos;
             fruits.forEach(Helpers.highlightFruit);
         }
     }
