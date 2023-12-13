@@ -12,7 +12,23 @@ abstract class Renderer {
         overlay.style.display = "none";
     }
 
-    /* Draws rows * cols number of fruits in gameCanvas. Max 170.*/
+    public static displayStartMenu() {
+        // All players have connected. Display Start game button
+    }
+
+    public static displayCountdown() {
+        // Game starting in 3, 2, 1 ...
+    }
+
+    public static displayGameOver() {
+        // Game ended due to no time left. Show Score, High Score, and Play Again button
+    }
+
+    public static displayDisconnect() {
+        // Game ended due to other player disconnecting.
+    }
+
+    /* Draws rows * cols number of fruits in gameCanvas. Max 170. */
     public static drawFruits(rows: number, cols: number) {
         let xOffset = 0;
         let yOffset = 0;

@@ -56,3 +56,11 @@ body {
     background-color: indianred;
     border: 1px dotted black;
 }
+
+#ui-container {
+    border: 1px dotted black;
+    position: absolute;
+    left: 10%;
+    top: 85%;
+    transform: translateX(-50%);
+}

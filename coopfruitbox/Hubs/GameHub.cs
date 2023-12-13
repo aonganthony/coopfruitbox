@@ -4,7 +4,7 @@ public interface IGameHub
 {
     Task ReceiveCursor(int x, int y, bool down, bool up);
     Task JoinLobby(string lobbyCode, bool client);
-    Task StartGame();
+    Task OtherPlayerConnected();
     // TODO: separate ReceiveCursor into ReceiveMove, ReceivePress, ReceiveDepress
 }
 
@@ -38,7 +38,7 @@ namespace coopfruitbox.Hubs
             await Groups.AddToGroupAsync(Context.ConnectionId, lobbyCode);
             if (client) {
                 _gameService.UpdateClientID(lobbyCode, Context.ConnectionId);
-                await Clients.Group(lobbyCode).StartGame();
+                await Clients.Group(lobbyCode).OtherPlayerConnected();
             }
         }
     }

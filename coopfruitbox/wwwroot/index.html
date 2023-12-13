@@ -14,13 +14,17 @@
             <div hidden id="selection-div"></div>
             <div hidden id="other-selection-div"></div>
         </div>
+        <div id="ui-container">
+            <div id="score-text"></div>
+            <div id="timer-text"></div>
+        </div>
 
         <div id="overlay">
             <div id="center-div">
                 <h1>Coop Fruitbox </h1>
                 <div id="button-holder">
-                    <button id ="play-button" class="button">Play</button>
-                    <button id ="create-lobby-button" class="button">Create lobby</button>
+                    <button id="play-button" class="button">Play</button>
+                    <button id="create-lobby-button" class="button">Create lobby</button>
                 </div>
                 <div>
                     <div id="lobby-link-text"></div>
@@ -36,8 +40,8 @@
         <script src="/dist/renderer.js"></script>
         <script src="/dist/types.js"></script>
         <script src="/dist/game.js"></script>
-        <script> 
-            Game.startConnection();
+        <script>
+            Game.start();
         </script>
     </main>
 </body>

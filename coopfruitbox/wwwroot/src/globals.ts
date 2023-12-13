@@ -1,10 +1,17 @@
 let connection: any;
-let lobbyID: string;
+let lobbyID: string = "default";
+let startTime: number = 120;
 
-const overlay: HTMLElement = document.getElementById("overlay") as HTMLElement;
-const playButton: HTMLButtonElement = document.getElementById("play-button") as HTMLButtonElement;
-const createLobbyButton: HTMLButtonElement = document.getElementById("create-lobby-button") as HTMLButtonElement;
-const lobbyLinkText: HTMLElement = document.getElementById("lobby-link-text") as HTMLElement;
+let overlay: HTMLElement = document.getElementById("overlay") as HTMLElement;
+let playButton: HTMLButtonElement = document.getElementById("play-button") as HTMLButtonElement;
+let createLobbyButton: HTMLButtonElement = document.getElementById("create-lobby-button") as HTMLButtonElement;
+let lobbyLinkText: HTMLElement = document.getElementById("lobby-link-text") as HTMLElement;
+
+let scoreText: HTMLElement = document.getElementById("score-text") as HTMLElement;
+let score: number = 0;
+let timerText: HTMLElement = document.getElementById("timer-text") as HTMLElement;
+let time: number;
+let timer: any;
 
 let canvasContainer: HTMLCanvasElement = document.getElementById("canvas-container") as HTMLCanvasElement;
 

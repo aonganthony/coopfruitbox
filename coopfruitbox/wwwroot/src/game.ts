@@ -1,12 +1,17 @@
 abstract class Game {
-    public static async startConnection() {
+    public static async start() {
+        await Game.setupConnection();
+        Game.checkURLforLobbyID();
+    }
+
+    public static async setupConnection() {
         connection = new signalR.HubConnectionBuilder()
             .withUrl("/gameHub")
             .build();
 
         await connection.start().catch((err: any) => console.log(err));
 
-        connection.on("StartGame", () => {
+        connection.on("OtherPlayerConnected", () => {
             Game.resetGame();
         });
 
@@ -23,9 +28,11 @@ abstract class Game {
             Renderer.drawOtherMouse(pos);
             Renderer.drawSelectionArea(otherSelectionDiv, otherSelectionArea);
         });
+    }
 
+    public static checkURLforLobbyID() {
         var delimiterValue = window.location.search.substring(1);
-        if (delimiterValue.length == 8) { // TODO: verify string
+        if (delimiterValue.length == 8) { // TODO: verify lobby exists, protect against sql injection
             lobbyID = delimiterValue;
             connection.invoke("JoinLobby", lobbyID, true)
         } else {
@@ -33,14 +40,27 @@ abstract class Game {
         }
     }
 
+    public static startTimer() {
+        time = startTime;
+        timer = setInterval(() => {
+            if (time <= 0) {
+                clearInterval(timer);
+                Game.gameOver();
+            }
+            time -= 1;
+            timerText.innerText = `${time}`;
+        }, 1000);
+    }
+
     public static resetGame() {
+        Game.startTimer();
         Renderer.hideOverlay();
         Renderer.drawGame();
         Renderer.trackMouseSelecting();
     }
 
-    public static displayGameOver() {
-
+    public static gameOver() {
+        Renderer.displayGameOver();
     }
 
     public static async createLobby() {
@@ -60,5 +80,5 @@ playButton.addEventListener("click", (): void => {
 });
 
 createLobbyButton.addEventListener("click", (): void => {
-    Game.createLobby();
-})
+    Game.createLobby();  
+}); 

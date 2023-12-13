@@ -68,8 +68,10 @@ abstract class Helpers {
 
         if (s == 10) {
             for (const f of fruits) {
-                if ((f.selected || f.selectedByOther)) { // if selected sum up to 10
+                if ((f.selected || f.selectedByOther) && !f.cleared) { // if selected sum up to 10
                     f.clear();
+                    score += 1;
+                    scoreText.innerText = score.toString();
                 }
             }
         } else {

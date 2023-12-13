@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Script: npm run start
+ts_watch.sh
+
 # Compiled JS files
 dist/
 
