@@ -79,4 +79,45 @@ abstract class Helpers {
         }
 
     }
+
+    public static resetTimer() {
+        clearInterval(timerInterval);
+        timerInterval = 0;
+    }
+
+    public static startGameTimer() {
+        startSoloButton.style.display = "none";
+        createLobbyButton.style.display = "none";
+        time = startTime;
+        Helpers.gameTick(); // initial func call here to jumpstart setInterval
+        timerInterval = setInterval(Helpers.gameTick, 1000);
+    }
+
+    public static gameTick() {
+        timerText.innerText = `${time}`;
+        if (time <= 0) {
+            Helpers.resetTimer();
+            Game.gameOver();
+        } else {
+            time -= 1;
+        }
+    }
+
+    public static startCountdown() {
+        startSoloButton.style.display = "none";
+        createLobbyButton.style.display = "none";
+        time = 3;
+        Helpers.countdownTick();
+        timerInterval = setInterval(Helpers.countdownTick, 1000);
+    }
+
+    public static countdownTick() {
+        Renderer.displayCountdown();
+        if (time <= 0) {
+            Helpers.resetTimer();
+            Game.resetGame();
+        } else {
+            time -= 1;
+        }
+    }
 }

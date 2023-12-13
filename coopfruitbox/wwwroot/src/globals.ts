@@ -1,17 +1,20 @@
 let connection: any;
 let lobbyID: string = "default";
 let startTime: number = 120;
+let time: number;
+let score: number = 0;
+let timerInterval: any;
 
 let overlay: HTMLElement = document.getElementById("overlay") as HTMLElement;
-let playButton: HTMLButtonElement = document.getElementById("play-button") as HTMLButtonElement;
+let startSoloButton: HTMLButtonElement = document.getElementById("play-solo-button") as HTMLButtonElement;
 let createLobbyButton: HTMLButtonElement = document.getElementById("create-lobby-button") as HTMLButtonElement;
-let lobbyLinkText: HTMLElement = document.getElementById("lobby-link-text") as HTMLElement;
+let startCoopButton: HTMLButtonElement = document.getElementById("start-coop-button") as HTMLButtonElement;
+let playAgainButton: HTMLButtonElement = document.getElementById("play-again-button") as HTMLButtonElement;
 
+let lobbyLinkText: HTMLElement = document.getElementById("lobby-link-text") as HTMLElement;
 let scoreText: HTMLElement = document.getElementById("score-text") as HTMLElement;
-let score: number = 0;
 let timerText: HTMLElement = document.getElementById("timer-text") as HTMLElement;
-let time: number;
-let timer: any;
+let overlayText: HTMLElement = document.getElementById("overlay-text") as HTMLElement;
 
 let canvasContainer: HTMLCanvasElement = document.getElementById("canvas-container") as HTMLCanvasElement;
 

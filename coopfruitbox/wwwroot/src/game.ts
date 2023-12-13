@@ -1,7 +1,9 @@
 abstract class Game {
     public static async start() {
         await Game.setupConnection();
-        Game.checkURLforLobbyID();
+        if (!Game.checkURLforLobbyID()) {
+            Renderer.displayMainMenu();
+        }
     }
 
     public static async setupConnection() {
@@ -12,8 +14,10 @@ abstract class Game {
         await connection.start().catch((err: any) => console.log(err));
 
         connection.on("OtherPlayerConnected", () => {
-            Game.resetGame();
+            Renderer.displayCoopStart();
         });
+
+        // TODO: sync startCoopButton/playAgain function using connection.on("startGame")
 
         connection.on("ReceiveCursor", (x: number, y: number, down: boolean, up: boolean) => {
             // console.log('updating with', x, y, down, up);
@@ -30,30 +34,21 @@ abstract class Game {
         });
     }
 
-    public static checkURLforLobbyID() {
+    public static checkURLforLobbyID(): boolean {
         var delimiterValue = window.location.search.substring(1);
         if (delimiterValue.length == 8) { // TODO: verify lobby exists, protect against sql injection
             lobbyID = delimiterValue;
-            connection.invoke("JoinLobby", lobbyID, true)
+            connection.invoke("JoinLobby", lobbyID, true);
+            return true;
         } else {
             // TODO: error prompt, lobby does not exist
+            return false;
         }
-    }
-
-    public static startTimer() {
-        time = startTime;
-        timer = setInterval(() => {
-            if (time <= 0) {
-                clearInterval(timer);
-                Game.gameOver();
-            }
-            time -= 1;
-            timerText.innerText = `${time}`;
-        }, 1000);
+        
     }
 
     public static resetGame() {
-        Game.startTimer();
+        Helpers.startGameTimer();
         Renderer.hideOverlay();
         Renderer.drawGame();
         Renderer.trackMouseSelecting();
@@ -68,17 +63,21 @@ abstract class Game {
             (gameID: string) => {
                 lobbyID = gameID;
                 lobbyLinkText.innerText = `Invite Link: https://localhost:7140/?${lobbyID}`;
-                playButton.style.display = "none";
+                startSoloButton.style.display = "none";
                 createLobbyButton.style.display = "none";
                 connection.invoke("JoinLobby", lobbyID, false);
             });
     }
 }
 
-playButton.addEventListener("click", (): void => {
-    Game.resetGame();
-});
+startSoloButton.addEventListener("click", Game.resetGame);
 
-createLobbyButton.addEventListener("click", (): void => {
-    Game.createLobby();  
+createLobbyButton.addEventListener("click", Game.createLobby)
+
+startCoopButton.addEventListener("click", (): void => {
+    Helpers.startCountdown();
+})
+
+playAgainButton.addEventListener("click", (): void => {
+    Helpers.startCountdown();
 }); 

@@ -1,6 +1,5 @@
 abstract class Renderer { 
     public static drawGame() {
-        
         gameCanvasContext.beginPath();
         gameCanvasContext.arc(50, 50, 15, 0, Math.PI * 2, false)
         gameCanvasContext.fillStyle = 'red'
@@ -8,16 +7,26 @@ abstract class Renderer {
         Renderer.drawFruits(10, 17);
     }
 
+    public static displayMainMenu() {
+        startSoloButton.style.display = 'inline';
+        createLobbyButton.style.display = 'inline';
+    }
+
     public static hideOverlay() {
         overlay.style.display = "none";
     }
 
-    public static displayStartMenu() {
+    public static displayCoopStart() {
         // All players have connected. Display Start game button
+        overlayText.style.display = "inline";
+        overlayText.innerText = `All players have connected.`
+        startCoopButton.style.display = "inline";
     }
 
     public static displayCountdown() {
         // Game starting in 3, 2, 1 ...
+        overlayText.style.display = "inline";
+        overlayText.innerText = `Starting in ${time}...`
     }
 
     public static displayGameOver() {
