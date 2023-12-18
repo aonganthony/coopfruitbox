@@ -24,14 +24,20 @@ abstract class Game {
             let pos = new MousePosition(x, y);
             if (down) {
                 Helpers.mouseDown(pos, otherSelectionArea);
-            } else if (up) {
+            }
+            else if (up) {
                 Helpers.mouseUp(pos, otherSelectionArea);
-            } else {
+            }
+            else {
                 Helpers.mouseMove(pos, otherSelectionArea);
             }
             Renderer.drawOtherMouse(pos);
             Renderer.drawSelectionArea(otherSelectionDiv, otherSelectionArea);
         });
+
+        if (!playerIsHost) {
+            Client.setupConnection();
+        }
     }
 
     public static checkURLforLobbyID(): boolean {
@@ -67,6 +73,8 @@ abstract class Game {
                 createLobbyButton.style.display = "none";
                 connection.invoke("JoinLobby", lobbyID, false);
             });
+        playerIsHost = true;
+        Host.setupConnection();
     }
 }
 

@@ -40,15 +40,17 @@ class Fruit {
     public value: number;
     public x: number;
     public y: number;
+    public id: number;
     public selected: boolean;
     public selectedByOther: boolean;
     public cleared: boolean;
     public defaultImage: HTMLImageElement;
 
-    constructor(value: number, x: number, y: number) {
+    constructor(value: number, x: number, y: number, id: number) {
         this.value = value;
         this.x = x;
         this.y = y;
+        this.id = id;
         this.selected = false;
         this.selectedByOther = false;
         this.cleared = false;
@@ -70,5 +72,34 @@ class Fruit {
     public clear() {
         gameCanvasContext.clearRect(this.x, this.y, fruit_radius, fruit_radius);
         this.cleared = true;
+    }
+}
+
+enum ClientObjectType {
+    Fruit,
+    NewGame,
+}
+
+enum HostObjectType {
+    Fruit,
+    NewGame,
+    GameOver
+}
+
+class ClientDataObject {
+    public fruitIDs!: number[];
+    public clientObjectType: ClientObjectType;
+    constructor(clientObjectType: ClientObjectType.Fruit, fruitIDs: number[]) {
+        this.clientObjectType = clientObjectType;
+        this.fruitIDs = fruitIDs;
+    }
+}
+
+class HostDataObject {
+    public fruitIDs!: number[];
+    public hostObjectType: HostObjectType;
+    constructor(hostObjectType: HostObjectType.Fruit, fruitIDs: number[]) {
+        this.hostObjectType = hostObjectType;
+        this.fruitIDs = fruitIDs;
     }
 }

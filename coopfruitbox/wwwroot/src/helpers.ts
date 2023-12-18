@@ -11,7 +11,11 @@ abstract class Helpers {
                 Helpers.mouseMove(pos, selectionArea);
                 break;
             case MouseEventType.Up:
-                Helpers.mouseUp(pos, selectionArea);
+                if (playerIsHost) {
+                    Host.mouseUp(pos, selectionArea);
+                } else {
+                    Client.mouseUp(pos, selectionArea);
+                }
                 up = true;
                 break;
         }
@@ -24,6 +28,32 @@ abstract class Helpers {
         let x = Math.min(Math.max(0, e.clientX - rect.left), rect.width - 8);
         let y = Math.min(Math.max(0, e.clientY - rect.top), rect.height - 8);
         return new MousePosition(Math.round(x), Math.round(y));
+    }
+
+    public static getFruitFromIDs(ids: number[]) {
+        let lst: Fruit[] = [];
+        for (const id of ids) {
+            lst.push(fruits[id]);
+        }
+        return lst;
+    }
+
+    public static getIDsFromFruit(fts: Fruit[]) {
+        let ids: number[] = [];
+        for (const f of fts) {
+            ids.push(f.id);
+        }
+        return ids;
+    }
+
+    public static getAllFruitInArea(area: MouseSelectionArea) {
+        let selectedFruits: Fruit[] = [];
+        for (let f of fruits) {
+            if (Helpers.fruitInArea(f, area) && !f.cleared) {
+                selectedFruits.push(f);
+            }
+        }
+        return selectedFruits;
     }
 
     public static fruitInArea(f: Fruit, area: MouseSelectionArea) {
@@ -59,9 +89,17 @@ abstract class Helpers {
         area.hidden = true;
         area.initialPos = pos;
         area.currentPos = pos;
-        let s = 0;
-        for (const f of fruits) {
-            if ((f.selected || f.selectedByOther) && !f.cleared) {
+        fruits.forEach(Helpers.highlightFruit);
+    }
+
+    /* public static mouseUp(pos: MousePosition, area: MouseSelectionArea) {
+        area.hidden = true;
+        area.initialPos = pos;
+        area.currentPos = pos;
+        let s = 0
+        let selectedFruits: Fruit[] = Helpers.getAllFruitInArea(selectionArea);
+        for (const f of selectedFruits) {
+            if (f.selected && !f.cleared) {
                 s += f.value;
             }
         }
@@ -78,7 +116,7 @@ abstract class Helpers {
             fruits.forEach(Helpers.highlightFruit);
         }
 
-    }
+    } */
 
     public static resetTimer() {
         clearInterval(timerInterval);
@@ -94,7 +132,7 @@ abstract class Helpers {
     }
 
     public static gameTick() {
-        timerText.innerText = `${time}`;
+        Renderer.updateTimer();
         if (time <= 0) {
             Helpers.resetTimer();
             Game.gameOver();

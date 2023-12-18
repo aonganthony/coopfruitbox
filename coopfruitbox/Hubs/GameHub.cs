@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.SignalR;
 public interface IGameHub
 {
     Task ReceiveCursor(int x, int y, bool down, bool up);
-    Task JoinLobby(string lobbyCode, bool client);
     Task OtherPlayerConnected();
+    Task ReceiveClientData(string data);
+    Task ReceiveHostData(string data);
+    // Task StartGame();
     // TODO: separate ReceiveCursor into ReceiveMove, ReceivePress, ReceiveDepress
 }
 
@@ -24,6 +26,18 @@ namespace coopfruitbox.Hubs
             // pass in lobbycode as group name
             // await Clients.OthersInGroup(lobbyCode).ReceiveCursor(...)
             await Clients.OthersInGroup(lobbyID).ReceiveCursor(x, y, down, up);
+        }
+
+        public async Task SendClientData(string lobbyID, string data)
+        {
+            Console.WriteLine("client sending {0}", data);
+            await Clients.OthersInGroup(lobbyID).ReceiveClientData(data);
+        }
+
+        public async Task SendHostData(string lobbyID, string data)
+        {
+            Console.WriteLine("host sending {0}", data);
+            await Clients.OthersInGroup(lobbyID).ReceiveHostData(data);
         }
 
         public string CreateLobby()

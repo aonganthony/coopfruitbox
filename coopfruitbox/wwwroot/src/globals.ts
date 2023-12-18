@@ -4,6 +4,7 @@ let startTime: number = 120;
 let time: number;
 let score: number = 0;
 let timerInterval: any;
+let playerIsHost: boolean = false;
 
 let overlay: HTMLElement = document.getElementById("overlay") as HTMLElement;
 let startSoloButton: HTMLButtonElement = document.getElementById("play-solo-button") as HTMLButtonElement;
@@ -46,6 +47,8 @@ a3.src = "images/a3.png";
 let highlight: HTMLImageElement = new Image();
 highlight.src = "images/highlight.png";
 
+let num_rows = 10;
+let num_cols = 17;
 let fruit_radius: number = 48;
 let goal: number = 10;
 let fruits: Fruit[] = [];

@@ -4,7 +4,7 @@ abstract class Renderer {
         gameCanvasContext.arc(50, 50, 15, 0, Math.PI * 2, false)
         gameCanvasContext.fillStyle = 'red'
         gameCanvasContext.fill()
-        Renderer.drawFruits(10, 17);
+        Renderer.drawFruits(num_rows, num_cols);
     }
 
     public static displayMainMenu() {
@@ -37,16 +37,26 @@ abstract class Renderer {
         // Game ended due to other player disconnecting.
     }
 
+    public static updateScore() {
+        scoreText.innerText = score.toString();
+    }
+
+    public static updateTimer() {
+        timerText.innerText = `${time}`;
+    }
+
     /* Draws rows * cols number of fruits in gameCanvas. Max 170. */
     public static drawFruits(rows: number, cols: number) {
         let xOffset = 0;
         let yOffset = 0;
+        let c = 0;
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
                 let rand = 1;
-                let fruit = new Fruit(rand, xOffset + 50 * j, yOffset + 50 * i);
+                let fruit = new Fruit(rand, xOffset + 50 * j, yOffset + 50 * i, c);
                 fruit.draw();
                 fruits.push(fruit);
+                c += 1;
             }
         }
     }
