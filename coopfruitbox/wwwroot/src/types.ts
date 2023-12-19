@@ -76,30 +76,56 @@ class Fruit {
 }
 
 enum ClientObjectType {
+    StartGame,
     Fruit,
-    NewGame,
+    ResetGame,
 }
 
 enum HostObjectType {
+    StartGame,
     Fruit,
-    NewGame,
+    GameState,
+    ResetGame,
     GameOver
 }
 
 class ClientDataObject {
     public fruitIDs!: number[];
     public clientObjectType: ClientObjectType;
-    constructor(clientObjectType: ClientObjectType.Fruit, fruitIDs: number[]) {
+    constructor(clientObjectType: ClientObjectType.StartGame);
+    constructor(clientObjectType: ClientObjectType.Fruit, fruitIDs: number[]);
+    constructor(clientObjectType: ClientObjectType.ResetGame);
+    constructor(clientObjectType: ClientObjectType, arg?: number[]) {
         this.clientObjectType = clientObjectType;
-        this.fruitIDs = fruitIDs;
+        switch (clientObjectType) {
+            case ClientObjectType.Fruit:
+                this.fruitIDs = arg;
+        }
     }
+
+
 }
 
 class HostDataObject {
     public fruitIDs!: number[];
+    public score!: number;
+    public time!: number;
     public hostObjectType: HostObjectType;
-    constructor(hostObjectType: HostObjectType.Fruit, fruitIDs: number[]) {
+    constructor(hostObjectType: HostObjectType.StartGame);
+    constructor(hostObjectType: HostObjectType.Fruit, fruitIDs: number[]);
+    constructor(hostObjectType: HostObjectType.GameState, time: number, score: number);
+    constructor(hostObjectType: HostObjectType.ResetGame);
+    constructor(hostObjectType: HostObjectType.GameOver); // TODO: add high score to GameOver constructor
+    constructor(hostObjectType: HostObjectType, arg1?: number[] | number, arg2?: number) {
         this.hostObjectType = hostObjectType;
-        this.fruitIDs = fruitIDs;
+        switch (hostObjectType) {
+            case HostObjectType.Fruit:
+                this.fruitIDs = <number[]> arg1;
+                break;
+            case HostObjectType.GameState:
+                this.score = <number>arg1;
+                this.time = <number>arg2;
+                break;
+        }
     }
 }

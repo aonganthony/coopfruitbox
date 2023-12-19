@@ -5,6 +5,7 @@ abstract class Renderer {
         gameCanvasContext.fillStyle = 'red'
         gameCanvasContext.fill()
         Renderer.drawFruits(num_rows, num_cols);
+        resetGameButton.style.display = "inline";
     }
 
     public static displayMainMenu() {
@@ -14,6 +15,7 @@ abstract class Renderer {
 
     public static hideOverlay() {
         overlay.style.display = "none";
+        resetGameButton.style.display = "none";
     }
 
     public static displayCoopStart() {
@@ -38,7 +40,7 @@ abstract class Renderer {
     }
 
     public static updateScore() {
-        scoreText.innerText = score.toString();
+        scoreText.innerText = `${score}`;
     }
 
     public static updateTimer() {

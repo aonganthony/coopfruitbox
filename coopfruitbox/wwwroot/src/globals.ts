@@ -5,11 +5,13 @@ let time: number;
 let score: number = 0;
 let timerInterval: any;
 let playerIsHost: boolean = false;
+let highScore: number;
 
 let overlay: HTMLElement = document.getElementById("overlay") as HTMLElement;
 let startSoloButton: HTMLButtonElement = document.getElementById("play-solo-button") as HTMLButtonElement;
 let createLobbyButton: HTMLButtonElement = document.getElementById("create-lobby-button") as HTMLButtonElement;
 let startCoopButton: HTMLButtonElement = document.getElementById("start-coop-button") as HTMLButtonElement;
+let resetGameButton: HTMLButtonElement = document.getElementById("reset-game-button") as HTMLButtonElement;
 let playAgainButton: HTMLButtonElement = document.getElementById("play-again-button") as HTMLButtonElement;
 
 let lobbyLinkText: HTMLElement = document.getElementById("lobby-link-text") as HTMLElement;

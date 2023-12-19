@@ -92,59 +92,16 @@ abstract class Helpers {
         fruits.forEach(Helpers.highlightFruit);
     }
 
-    /* public static mouseUp(pos: MousePosition, area: MouseSelectionArea) {
-        area.hidden = true;
-        area.initialPos = pos;
-        area.currentPos = pos;
-        let s = 0
-        let selectedFruits: Fruit[] = Helpers.getAllFruitInArea(selectionArea);
-        for (const f of selectedFruits) {
-            if (f.selected && !f.cleared) {
-                s += f.value;
-            }
-        }
-
-        if (s == 10) {
-            for (const f of fruits) {
-                if ((f.selected || f.selectedByOther) && !f.cleared) { // if selected sum up to 10
-                    f.clear();
-                    score += 1;
-                    scoreText.innerText = score.toString();
-                }
-            }
-        } else {
-            fruits.forEach(Helpers.highlightFruit);
-        }
-
-    } */
-
     public static resetTimer() {
         clearInterval(timerInterval);
-        timerInterval = 0;
-    }
-
-    public static startGameTimer() {
-        startSoloButton.style.display = "none";
-        createLobbyButton.style.display = "none";
-        time = startTime;
-        Helpers.gameTick(); // initial func call here to jumpstart setInterval
-        timerInterval = setInterval(Helpers.gameTick, 1000);
-    }
-
-    public static gameTick() {
-        Renderer.updateTimer();
-        if (time <= 0) {
-            Helpers.resetTimer();
-            Game.gameOver();
-        } else {
-            time -= 1;
-        }
+        timerInterval = false;
     }
 
     public static startCountdown() {
         startSoloButton.style.display = "none";
         createLobbyButton.style.display = "none";
         time = 3;
+        Helpers.resetTimer();
         Helpers.countdownTick();
         timerInterval = setInterval(Helpers.countdownTick, 1000);
     }

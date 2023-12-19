@@ -4,14 +4,38 @@ abstract class Client {
             const hostDataObject: HostDataObject = JSON.parse(data);
             console.log("received host data:", hostDataObject);
             switch (hostDataObject.hostObjectType as HostObjectType) {
+                case HostObjectType.StartGame:
+                    Helpers.startCountdown();
+                    break;
                 case HostObjectType.Fruit:
                     // given host's fruits to clear, clear them and update score
                     Client.clearFruit(Helpers.getFruitFromIDs(hostDataObject.fruitIDs));
                     break;
-                case HostObjectType.NewGame:
+                case HostObjectType.GameState:
+                    Client.updateGameState(hostDataObject.score, hostDataObject.time);
+                    break;
+                case HostObjectType.ResetGame:
+                    Game.resetGame();
                     break;
             }
         });
+    }
+
+    public static startCountdown() {
+        let data = new ClientDataObject(ClientObjectType.StartGame);
+        connection.invoke("SendClientData", lobbyID, JSON.stringify(data));
+    }
+
+    public static updateGameState(s: number, t: number) {
+        score = s;
+        time = t;
+        Renderer.updateScore();
+        Renderer.updateTimer();
+    }
+
+    public static playAgain() {
+        let data = new ClientDataObject(ClientObjectType.ResetGame);
+        connection.invoke("SendClientData", lobbyID, JSON.stringify(data));
     }
 
     public static mouseUp(pos: MousePosition, area: MouseSelectionArea) {
@@ -34,13 +58,10 @@ abstract class Client {
     }
 
     public static clearFruit(fruitsToClear: Fruit[]) {
-        // TODO: change this so that it takes clears fruit using the rows and columns as args 
         for (const f of fruitsToClear) {
             if (!fruits[f.id].cleared) {
                 fruits[f.id].clear();
-                score += 1;
             }
         }
-        Renderer.updateScore();
     }
 }

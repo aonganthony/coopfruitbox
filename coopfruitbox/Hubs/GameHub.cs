@@ -7,7 +7,7 @@ public interface IGameHub
     Task ReceiveClientData(string data);
     Task ReceiveHostData(string data);
     // Task StartGame();
-    // TODO: separate ReceiveCursor into ReceiveMove, ReceivePress, ReceiveDepress
+    // TODO: change receiveCursor to use MouseEventType instead of down and up
 }
 
 namespace coopfruitbox.Hubs

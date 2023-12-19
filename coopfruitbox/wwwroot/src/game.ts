@@ -17,8 +17,6 @@ abstract class Game {
             Renderer.displayCoopStart();
         });
 
-        // TODO: sync startCoopButton/playAgain function using connection.on("startGame")
-
         connection.on("ReceiveCursor", (x: number, y: number, down: boolean, up: boolean) => {
             // console.log('updating with', x, y, down, up);
             let pos = new MousePosition(x, y);
@@ -54,7 +52,13 @@ abstract class Game {
     }
 
     public static resetGame() {
-        Helpers.startGameTimer();
+        fruits = [];
+        score = 0;
+        Helpers.resetTimer();
+        if (playerIsHost) {
+            Host.startGameTimer()
+        }
+        Renderer.updateScore();
         Renderer.hideOverlay();
         Renderer.drawGame();
         Renderer.trackMouseSelecting();
@@ -83,9 +87,28 @@ startSoloButton.addEventListener("click", Game.resetGame);
 createLobbyButton.addEventListener("click", Game.createLobby)
 
 startCoopButton.addEventListener("click", (): void => {
-    Helpers.startCountdown();
+    if (playerIsHost) {
+        Host.startCountdown();
+    } else {
+        Client.startCountdown();
+    }
 })
 
 playAgainButton.addEventListener("click", (): void => {
-    Helpers.startCountdown();
+    // TODO: setup endGame menu that shows score, time left, play again button
+    // only 1 player is required to activate playAgain button
+    if (playerIsHost) {
+        Host.playAgain();
+    } else {
+        Client.playAgain();
+    }
 }); 
+
+resetGameButton.addEventListener("click", (): void => {
+    // TODO: make it so that both players need to click reset in order for game to reset
+    if (playerIsHost) {
+        Host.playAgain();
+    } else {
+        Client.playAgain();
+    }
+})
