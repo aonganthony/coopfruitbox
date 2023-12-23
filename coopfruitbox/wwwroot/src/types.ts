@@ -41,8 +41,6 @@ class Fruit {
     public x: number;
     public y: number;
     public id: number;
-    public selected: boolean;
-    public selectedByOther: boolean;
     public cleared: boolean;
     public defaultImage: HTMLImageElement;
 
@@ -51,8 +49,6 @@ class Fruit {
         this.x = x;
         this.y = y;
         this.id = id;
-        this.selected = false;
-        this.selectedByOther = false;
         this.cleared = false;
         /* Assign images based on value here */
         this.defaultImage = a1;
@@ -63,7 +59,11 @@ class Fruit {
             return
         }
         gameCanvasContext.clearRect(this.x, this.y, fruit_radius, fruit_radius);
-        if (this.selected || this.selectedByOther) {
+        if ((selected.has(this) && Helpers.sumOfFruits(selected) == 10) ||
+            (selectedByOther.has(this) && Helpers.sumOfFruits(selectedByOther) == 10)) {
+            gameCanvasContext.drawImage(scoreable, this.x, this.y, fruit_radius, fruit_radius);
+        }
+        else if (Helpers.fruitInArea(this, selectionArea) || Helpers.fruitInArea(this, otherSelectionArea)) {
             gameCanvasContext.drawImage(highlight, this.x, this.y, fruit_radius, fruit_radius);
         }
         gameCanvasContext.drawImage(this.defaultImage, this.x, this.y, fruit_radius, fruit_radius);

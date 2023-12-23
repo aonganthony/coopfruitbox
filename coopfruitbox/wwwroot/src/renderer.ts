@@ -1,5 +1,7 @@
 abstract class Renderer { 
     public static drawGame() {
+        selectionArea = new MouseSelectionArea(0, 0, 0, 0, true);
+        otherSelectionArea = new MouseSelectionArea(0, 0, 0, 0, true);
         gameCanvasContext.beginPath();
         gameCanvasContext.arc(50, 50, 15, 0, Math.PI * 2, false)
         gameCanvasContext.fillStyle = 'red'
@@ -64,8 +66,6 @@ abstract class Renderer {
     }
 
     public static trackMouseSelecting() {
-        selectionArea = new MouseSelectionArea(0, 0, 0, 0, true);
-        otherSelectionArea = new MouseSelectionArea(0, 0, 0, 0, true);
         onmousedown = function (e) { Helpers.sendCursor(e, MouseEventType.Down); }
         onmousemove = function (e) { Helpers.sendCursor(e, MouseEventType.Move); }
         onmouseup = function (e) { Helpers.sendCursor(e, MouseEventType.Up); }

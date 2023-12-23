@@ -63,9 +63,15 @@ abstract class Helpers {
         return (x1 < center_x && center_x < x2 && y1 < center_y && center_y < y2) 
     }
 
+    public static sumOfFruits(selectedSet: Set<Fruit>) {
+        let sum = 0;
+        for (let f of <Fruit[]>Array.from(selectedSet)) {
+            sum += f.value;
+        }
+        return sum;
+    }
+
     public static highlightFruit(f: Fruit) {
-        f.selected = Helpers.fruitInArea(f, selectionArea);
-        f.selectedByOther = Helpers.fruitInArea(f, otherSelectionArea);
         f.draw();
     }
 
@@ -76,11 +82,17 @@ abstract class Helpers {
     }
 
     public static mouseMove(pos: MousePosition, area: MouseSelectionArea) {
-        if (area.hidden) {
-            // area.initialPos = pos;
-        }
+        let selectedSet = (area == selectionArea) ? selected : selectedByOther;
         if (!area.hidden) {
             area.currentPos = pos;
+            for (let f of fruits) {
+                if (!f.cleared && Helpers.fruitInArea(f, area)) {
+                    selectedSet.add(f);
+                } else {
+                    selectedSet.delete(f);
+                }
+                f.draw();
+            }
             fruits.forEach(Helpers.highlightFruit);
         }
     }

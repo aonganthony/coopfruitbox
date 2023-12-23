@@ -48,10 +48,13 @@ let a3: HTMLImageElement = new Image();
 a3.src = "images/a3.png";
 let highlight: HTMLImageElement = new Image();
 highlight.src = "images/highlight.png";
+let scoreable: HTMLImageElement = new Image();
+scoreable.src = "images/scoreable.png";
 
 let num_rows = 10;
 let num_cols = 17;
 let fruit_radius: number = 48;
 let goal: number = 10;
 let fruits: Fruit[] = [];
-let selected = new Set();
+let selected: Set<Fruit> = new Set();
+let selectedByOther: Set<Fruit> = new Set();

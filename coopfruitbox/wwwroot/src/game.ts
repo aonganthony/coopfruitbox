@@ -53,6 +53,7 @@ abstract class Game {
 
     public static resetGame() {
         fruits = [];
+        selected = new Set();
         score = 0;
         Helpers.resetTimer();
         if (playerIsHost) {
