@@ -88,6 +88,8 @@ abstract class Helpers {
     }
 
     public static mouseUp(pos: MousePosition, area: MouseSelectionArea) {
+        let selectedSet = (area == selectionArea) ? selected : selectedByOther;
+        selectedSet.clear();
         area.hidden = true;
         area.initialPos = pos;
         area.currentPos = pos;

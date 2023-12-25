@@ -51,11 +51,9 @@ abstract class Client {
 
     public static mouseUp(pos: MousePosition, area: MouseSelectionArea) {
         let selectedFruits: Fruit[] = Array.from(selected);
-        area.hidden = true;
-        area.initialPos = pos;
-        area.currentPos = pos;
-        console.log("client: ", selectedFruits);
-        if (Helpers.sumOfFruits(selected)) {
+        let selectedScore = Helpers.sumOfFruits(selected);
+        Helpers.mouseUp(pos, area);
+        if (selectedScore == goal) {
             let data = new ClientDataObject(ClientObjectType.Fruit, Helpers.getIDsFromFruit(selectedFruits));
             connection.invoke("SendClientData", lobbyID, JSON.stringify(data))
         } else {

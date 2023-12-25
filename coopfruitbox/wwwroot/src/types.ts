@@ -58,12 +58,11 @@ class Fruit {
             return
         }
         gameCanvasContext.clearRect(this.x, this.y, fruit_radius, fruit_radius);
-        if ((selected.has(this) && Helpers.sumOfFruits(selected) == 10) ||
-            (selectedByOther.has(this) && Helpers.sumOfFruits(selectedByOther) == 10)) {
-            gameCanvasContext.drawImage(scoreable, this.x, this.y, fruit_radius, fruit_radius);
-        }
-        else if (Helpers.fruitInArea(this, selectionArea) || Helpers.fruitInArea(this, otherSelectionArea)) {
+        if (selected.has(this) || selectedByOther.has(this)) { 
             gameCanvasContext.drawImage(highlight, this.x, this.y, fruit_radius, fruit_radius);
+            if (Helpers.sumOfFruits(selected) == goal || Helpers.sumOfFruits(selectedByOther) == goal) {
+                gameCanvasContext.drawImage(scoreable, this.x, this.y, fruit_radius, fruit_radius);
+            }
         }
         gameCanvasContext.drawImage(this.defaultImage, this.x, this.y, fruit_radius, fruit_radius);
     }

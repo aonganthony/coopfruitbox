@@ -51,11 +51,9 @@ abstract class Host {
 
     public static mouseUp(pos: MousePosition, area: MouseSelectionArea) {
         let selectedFruits: Fruit[] = Array.from(selected);
-        area.hidden = true;
-        area.initialPos = pos;
-        area.currentPos = pos;
-        // get fruits that are selected, check if sum to 10, clear them and send state to client
-        if (Helpers.sumOfFruits(selected)) {
+        let selectedScore = Helpers.sumOfFruits(selected);
+        Helpers.mouseUp(pos, area);
+        if (selectedScore == goal) {
             Host.clearFruit(selectedFruits);
         } else {
             selectedFruits.forEach(Helpers.highlightFruit);
