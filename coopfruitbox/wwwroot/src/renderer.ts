@@ -2,12 +2,8 @@ abstract class Renderer {
     public static drawGame() {
         selectionArea = new MouseSelectionArea(0, 0, 0, 0, true);
         otherSelectionArea = new MouseSelectionArea(0, 0, 0, 0, true);
-        gameCanvasContext.beginPath();
-        gameCanvasContext.arc(50, 50, 15, 0, Math.PI * 2, false)
-        gameCanvasContext.fillStyle = 'red'
-        gameCanvasContext.fill()
-        Renderer.drawFruits(num_rows, num_cols);
-        resetGameButton.style.display = "inline";
+        uiContainer.style.display = "inline";
+        Renderer.displayFruit();
     }
 
     public static displayMainMenu() {
@@ -17,7 +13,6 @@ abstract class Renderer {
 
     public static hideOverlay() {
         overlay.style.display = "none";
-        resetGameButton.style.display = "none";
     }
 
     public static displayCoopStart() {
@@ -31,6 +26,12 @@ abstract class Renderer {
         // Game starting in 3, 2, 1 ...
         overlayText.style.display = "inline";
         overlayText.innerText = `Starting in ${time}...`
+    }
+
+    public static displayFruit() {
+        for (let f of fruits) {
+            f.draw();
+        }
     }
 
     public static displayGameOver() {
@@ -49,23 +50,7 @@ abstract class Renderer {
         timerText.innerText = `${time}`;
     }
 
-    /* Draws rows * cols number of fruits in gameCanvas. Max 170. */
-    public static drawFruits(rows: number, cols: number) {
-        let xOffset = 0;
-        let yOffset = 0;
-        let c = 0;
-        for (let i = 0; i < rows; i++) {
-            for (let j = 0; j < cols; j++) {
-                let rand = 1;
-                let fruit = new Fruit(rand, xOffset + 50 * j, yOffset + 50 * i, c);
-                fruit.draw();
-                fruits.push(fruit);
-                c += 1;
-            }
-        }
-    }
-
-    public static trackMouseSelecting() {
+    public static trackMouse() {
         onmousedown = function (e) { Helpers.sendCursor(e, MouseEventType.Down); }
         onmousemove = function (e) { Helpers.sendCursor(e, MouseEventType.Move); }
         onmouseup = function (e) { Helpers.sendCursor(e, MouseEventType.Up); }

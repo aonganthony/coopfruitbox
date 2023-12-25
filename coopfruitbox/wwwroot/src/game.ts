@@ -60,10 +60,34 @@ abstract class Game {
         if (playerIsHost) {
             Host.startGameTimer()
         }
+        Game.createFruits(seed);
+        Renderer.drawGame();
         Renderer.updateScore();
         Renderer.hideOverlay();
-        Renderer.drawGame();
-        Renderer.trackMouseSelecting();
+        Renderer.trackMouse();
+    }
+
+    // Creates and returns random values for the fruits.
+    public static createBoardSeed() {
+        let fruitVals = [];
+        for (let i = 0; i < num_rows * num_cols; i++) {
+            fruitVals[i] = Math.floor(Math.random() * 8) + 1;
+        }
+        return fruitVals;
+    }
+
+    // Initializes fruit objects from seed and stores list in global variable.
+    public static createFruits(seed: number[]) {
+        let xOffset = 0;
+        let yOffset = 0;
+        let c = 0;
+        for (let i = 0; i < num_rows; i++) {
+            for (let j = 0; j < num_cols; j++) {
+                let fruit = new Fruit(seed[c], xOffset + 50 * j, yOffset + 50 * i, c);
+                fruits.push(fruit);
+                c += 1;
+            }
+        }
     }
 
     public static gameOver() {
@@ -100,17 +124,17 @@ playAgainButton.addEventListener("click", (): void => {
     // TODO: setup endGame menu that shows score, time left, play again button
     // only 1 player is required to activate playAgain button
     if (playerIsHost) {
-        Host.playAgain();
+        Host.resetGame();
     } else {
-        Client.playAgain();
+        Client.resetGame();
     }
 }); 
 
 resetGameButton.addEventListener("click", (): void => {
     // TODO: make it so that both players need to click reset in order for game to reset
     if (playerIsHost) {
-        Host.playAgain();
+        Host.resetGame();
     } else {
-        Client.playAgain();
+        Client.resetGame();
     }
 })

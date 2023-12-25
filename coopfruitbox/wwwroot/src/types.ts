@@ -50,8 +50,7 @@ class Fruit {
         this.y = y;
         this.id = id;
         this.cleared = false;
-        /* Assign images based on value here */
-        this.defaultImage = a1;
+        this.defaultImage = apple_images[value - 1];
     }
 
     public draw() {
@@ -102,29 +101,30 @@ class ClientDataObject {
                 this.fruitIDs = arg;
         }
     }
-
-
 }
 
 class HostDataObject {
+    public fruitSeed: number[];
     public fruitIDs!: number[];
     public score!: number;
     public time!: number;
     public hostObjectType: HostObjectType;
     constructor(hostObjectType: HostObjectType.StartGame);
+    constructor(hostObjectType: HostObjectType.ResetGame, fruitSeed: number[]);
     constructor(hostObjectType: HostObjectType.Fruit, fruitIDs: number[]);
     constructor(hostObjectType: HostObjectType.GameState, time: number, score: number);
-    constructor(hostObjectType: HostObjectType.ResetGame);
     constructor(hostObjectType: HostObjectType.GameOver); // TODO: add high score to GameOver constructor
     constructor(hostObjectType: HostObjectType, arg1?: number[] | number, arg2?: number) {
         this.hostObjectType = hostObjectType;
         switch (hostObjectType) {
+            case HostObjectType.ResetGame:
+                this.fruitSeed = <number[]> arg1;
             case HostObjectType.Fruit:
                 this.fruitIDs = <number[]> arg1;
                 break;
             case HostObjectType.GameState:
-                this.score = <number>arg1;
-                this.time = <number>arg2;
+                this.score = <number> arg1;
+                this.time = <number> arg2;
                 break;
         }
     }

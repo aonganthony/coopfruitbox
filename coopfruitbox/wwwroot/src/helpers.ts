@@ -114,17 +114,8 @@ abstract class Helpers {
         createLobbyButton.style.display = "none";
         time = 3;
         Helpers.resetTimer();
-        Helpers.countdownTick();
-        timerInterval = setInterval(Helpers.countdownTick, 1000);
-    }
-
-    public static countdownTick() {
-        Renderer.displayCountdown();
-        if (time <= 0) {
-            Helpers.resetTimer();
-            Game.resetGame();
-        } else {
-            time -= 1;
-        }
+        let countdownTick = (playerIsHost) ? Host.countdownTick : Client.countdownTick;
+        countdownTick();
+        timerInterval = setInterval(countdownTick, 1000);
     }
 }

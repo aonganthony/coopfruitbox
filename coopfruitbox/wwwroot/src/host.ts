@@ -8,12 +8,12 @@ abstract class Host {
                 case ClientObjectType.StartGame:
                     Host.startCountdown()
                     break;
+                case ClientObjectType.ResetGame:
+                    Host.resetGame();
+                    break;
                 case ClientObjectType.Fruit:
                     // given client's fruits, clear them and send back to client to clear them
                     Host.clearFruit(Helpers.getFruitFromIDs(clientDataObject.fruitIDs));
-                    break;
-                case ClientObjectType.ResetGame:
-                    Host.playAgain();
                     break;
             }
         });
@@ -21,12 +21,23 @@ abstract class Host {
 
     public static startCountdown() {
         let data = new HostDataObject(HostObjectType.StartGame);
-        connection.invoke("SendHostData", lobbyID, JSON.stringify(data))
+        connection.invoke("SendHostData", lobbyID, JSON.stringify(data));
         Helpers.startCountdown();
     }
 
-    public static playAgain() {
-        let data = new HostDataObject(HostObjectType.ResetGame);
+    public static countdownTick() {
+        Renderer.displayCountdown();
+        if (time <= 0) {
+            Helpers.resetTimer();
+            Host.resetGame();
+        } else {
+            time -= 1;
+        }
+    }
+
+    public static async resetGame() {
+        seed = Game.createBoardSeed();
+        let data = new HostDataObject(HostObjectType.ResetGame, seed);
         connection.invoke("SendHostData", lobbyID, JSON.stringify(data))
         Game.resetGame();
     }

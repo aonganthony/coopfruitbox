@@ -7,15 +7,17 @@ abstract class Client {
                 case HostObjectType.StartGame:
                     Helpers.startCountdown();
                     break;
+                case HostObjectType.ResetGame:
+                    console.log(hostDataObject.fruitSeed);
+                    seed = hostDataObject.fruitSeed;
+                    Game.resetGame();
+                    break;
                 case HostObjectType.Fruit:
                     // given host's fruits to clear, clear them and update score
                     Client.clearFruit(Helpers.getFruitFromIDs(hostDataObject.fruitIDs));
                     break;
                 case HostObjectType.GameState:
                     Client.updateGameState(hostDataObject.score, hostDataObject.time);
-                    break;
-                case HostObjectType.ResetGame:
-                    Game.resetGame();
                     break;
             }
         });
@@ -26,6 +28,15 @@ abstract class Client {
         connection.invoke("SendClientData", lobbyID, JSON.stringify(data));
     }
 
+    public static countdownTick() {
+        Renderer.displayCountdown();
+        if (time <= 0) {
+            Helpers.resetTimer();
+        } else {
+            time -= 1;
+        }
+    }
+
     public static updateGameState(s: number, t: number) {
         score = s;
         time = t;
@@ -33,7 +44,7 @@ abstract class Client {
         Renderer.updateTimer();
     }
 
-    public static playAgain() {
+    public static resetGame() {
         let data = new ClientDataObject(ClientObjectType.ResetGame);
         connection.invoke("SendClientData", lobbyID, JSON.stringify(data));
     }
