@@ -108,7 +108,7 @@ abstract class Game {
     }
 }
 
-startSoloButton.addEventListener("click", Game.resetGame);
+startSoloButton.addEventListener("click", Game.resetGame); // add dedicated method for playing alone
 
 createLobbyButton.addEventListener("click", Game.createLobby)
 

@@ -46,16 +46,6 @@ abstract class Helpers {
         return ids;
     }
 
-    public static getAllFruitInArea(area: MouseSelectionArea) {
-        let selectedFruits: Fruit[] = [];
-        for (let f of fruits) {
-            if (Helpers.fruitInArea(f, area) && !f.cleared) {
-                selectedFruits.push(f);
-            }
-        }
-        return selectedFruits;
-    }
-
     public static fruitInArea(f: Fruit, area: MouseSelectionArea) {
         let center_x = f.x + fruit_radius / 2;
         let center_y = f.y + fruit_radius / 2;

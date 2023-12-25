@@ -50,17 +50,12 @@ abstract class Client {
     }
 
     public static mouseUp(pos: MousePosition, area: MouseSelectionArea) {
-        let selectedFruits: Fruit[] = Helpers.getAllFruitInArea(area);
+        let selectedFruits: Fruit[] = Array.from(selected);
         area.hidden = true;
         area.initialPos = pos;
         area.currentPos = pos;
-        let s = 0;
         console.log("client: ", selectedFruits);
-        for (const f of selectedFruits) {
-            s += f.value;
-        }
-
-        if (s == 10) {
+        if (Helpers.sumOfFruits(selected)) {
             let data = new ClientDataObject(ClientObjectType.Fruit, Helpers.getIDsFromFruit(selectedFruits));
             connection.invoke("SendClientData", lobbyID, JSON.stringify(data))
         } else {
