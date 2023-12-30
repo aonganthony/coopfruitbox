@@ -14,23 +14,12 @@ abstract class Game {
         await connection.start().catch((err: any) => console.log(err));
 
         connection.on("OtherPlayerConnected", () => {
+            if (playerIsHost) {
+                let data = new HostDataObject(HostObjectType.Signal, playerSignal);
+                console.log("sending signal to client");
+                connection.invoke("SendHostData", lobbyID, JSON.stringify(data));
+            }
             Renderer.displayCoopStart();
-        });
-
-        connection.on("ReceiveCursor", (x: number, y: number, down: boolean, up: boolean) => {
-            // console.log('updating with', x, y, down, up);
-            let pos = new MousePosition(x, y);
-            if (down) {
-                Helpers.mouseDown(pos, otherSelectionArea);
-            }
-            else if (up) {
-                Helpers.mouseUp(pos, otherSelectionArea);
-            }
-            else {
-                Helpers.mouseMove(pos, otherSelectionArea);
-            }
-            Renderer.drawOtherMouse(pos);
-            Renderer.drawSelectionArea(otherSelectionDiv, otherSelectionArea);
         });
 
         if (!playerIsHost) {
@@ -48,7 +37,6 @@ abstract class Game {
             // TODO: error prompt, lobby does not exist
             return false;
         }
-        
     }
 
     public static resetGame() {

@@ -11,6 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\test.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\src\globals.ts" />
     <None Include="wwwroot\src\renderer.ts" />
     <None Include="wwwroot\src\types.ts" />

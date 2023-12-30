@@ -6,6 +6,8 @@ let score: number = 0;
 let timerInterval: any;
 let playerIsHost: boolean = false;
 let highScore: number;
+let p: SimplePeer;
+let playerSignal: string;
 
 let overlay: HTMLElement = document.getElementById("overlay") as HTMLElement;
 let uiContainer: HTMLElement = document.getElementById("ui-container") as HTMLElement;

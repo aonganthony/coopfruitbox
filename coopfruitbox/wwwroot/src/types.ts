@@ -4,6 +4,16 @@ enum MouseEventType {
     Up
 }
 
+class Cursor {
+    public pos: MousePosition;
+    public type: MouseEventType;
+
+    constructor(pos: MousePosition, type: MouseEventType) {
+        this.pos = pos;
+        this.type = type;
+    }
+}
+
 class MousePosition {
     public x: number;
     public y: number;
@@ -74,12 +84,14 @@ class Fruit {
 }
 
 enum ClientObjectType {
+    Signal,
     StartGame,
     Fruit,
     ResetGame,
 }
 
 enum HostObjectType {
+    Signal,
     StartGame,
     Fruit,
     GameState,
@@ -88,36 +100,47 @@ enum HostObjectType {
 }
 
 class ClientDataObject {
+    public signal!: string;
     public fruitIDs!: number[];
     public clientObjectType: ClientObjectType;
+    constructor(clientObjectType: ClientObjectType.Signal, signal: string);
     constructor(clientObjectType: ClientObjectType.StartGame);
     constructor(clientObjectType: ClientObjectType.Fruit, fruitIDs: number[]);
     constructor(clientObjectType: ClientObjectType.ResetGame);
-    constructor(clientObjectType: ClientObjectType, arg?: number[]) {
+    constructor(clientObjectType: ClientObjectType, arg?: string | number[]) {
         this.clientObjectType = clientObjectType;
         switch (clientObjectType) {
+            case ClientObjectType.Signal:
+                this.signal = <string>arg;
+                break;
             case ClientObjectType.Fruit:
-                this.fruitIDs = arg;
+                this.fruitIDs = <number[]>arg;
+                break;
         }
     }
 }
 
 class HostDataObject {
+    public signal!: string;
     public fruitSeed: number[];
     public fruitIDs!: number[];
     public score!: number;
     public time!: number;
     public hostObjectType: HostObjectType;
+    constructor(hostObjectType: HostObjectType.Signal, signal: string);
     constructor(hostObjectType: HostObjectType.StartGame);
     constructor(hostObjectType: HostObjectType.ResetGame, fruitSeed: number[]);
     constructor(hostObjectType: HostObjectType.Fruit, fruitIDs: number[]);
     constructor(hostObjectType: HostObjectType.GameState, time: number, score: number);
     constructor(hostObjectType: HostObjectType.GameOver); // TODO: add high score to GameOver constructor
-    constructor(hostObjectType: HostObjectType, arg1?: number[] | number, arg2?: number) {
+    constructor(hostObjectType: HostObjectType, arg1?: string | number[] | number, arg2?: number) {
         this.hostObjectType = hostObjectType;
         switch (hostObjectType) {
+            case HostObjectType.Signal:
+                this.signal = <string> arg1;
             case HostObjectType.ResetGame:
-                this.fruitSeed = <number[]> arg1;
+                this.fruitSeed = <number[]>arg1;
+                break;
             case HostObjectType.Fruit:
                 this.fruitIDs = <number[]> arg1;
                 break;

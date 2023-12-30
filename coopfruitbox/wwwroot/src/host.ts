@@ -1,22 +1,47 @@
 abstract class Host {
     public static setupConnection() {
-        // Host.setupConnection
+        Host.setupSimplePeer();
         connection.on("ReceiveClientData", (data: string) => {
             const clientDataObject: ClientDataObject = JSON.parse(data);
             console.log("received client data:", clientDataObject);
             switch (clientDataObject.clientObjectType as ClientObjectType) {
+                case ClientObjectType.Signal:
+                    Host.receiveSignal(clientDataObject.signal);
+                    break;
                 case ClientObjectType.StartGame:
-                    Host.startCountdown()
+                    Host.startCountdown();
                     break;
                 case ClientObjectType.ResetGame:
                     Host.resetGame();
                     break;
                 case ClientObjectType.Fruit:
-                    // given client's fruits, clear them and send back to client to clear them
                     Host.clearFruit(Helpers.getFruitFromIDs(clientDataObject.fruitIDs));
                     break;
             }
         });
+    }
+
+    public static setupSimplePeer() {
+        p = new SimplePeer({
+            initiator: playerIsHost,
+            trickle: false
+        })
+        p.on('error', err => console.log('error', err))
+        p.on('signal', signal => {
+            console.log("SIGNAL", signal);
+            playerSignal = signal;
+        })
+        p.on('connect', () => {
+            console.log('connected');
+        })
+        p.on('data', data => {
+            Helpers.receiveCursor(JSON.parse(data));
+        })
+    }
+
+    public static receiveSignal(signal: string) {
+        console.log("RECEIVED", signal);
+        p.signal(signal);
     }
 
     public static startCountdown() {

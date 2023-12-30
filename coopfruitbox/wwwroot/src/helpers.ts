@@ -1,11 +1,9 @@
 abstract class Helpers {
-    public static sendCursor(e: MouseEvent, mouseType: MouseEventType) {
+    public static sendCursor(e: MouseEvent, type: MouseEventType) {
         let pos = Helpers.getMousePosition(canvasContainer, e);
-        let down = false, up = false;
-        switch (mouseType) {
+        switch (type) {
             case MouseEventType.Down:
                 Helpers.mouseDown(pos, selectionArea);
-                down = true;
                 break;
             case MouseEventType.Move:
                 Helpers.mouseMove(pos, selectionArea);
@@ -16,11 +14,28 @@ abstract class Helpers {
                 } else {
                     Client.mouseUp(pos, selectionArea);
                 }
-                up = true;
                 break;
         }
         Renderer.drawSelectionArea(selectionDiv, selectionArea);
-        connection.send("DisplayCursor", lobbyID, pos.x, pos.y, down, up);
+        p.send(JSON.stringify(new Cursor(pos, type)));
+    }
+
+    public static receiveCursor(cursor: Cursor) {
+        let pos = cursor.pos;
+        let type = cursor.type;
+        switch (type) {
+            case MouseEventType.Down:
+                Helpers.mouseDown(pos, otherSelectionArea);
+                break;
+            case MouseEventType.Move:
+                Helpers.mouseMove(pos, otherSelectionArea);
+                break;
+            case MouseEventType.Up:
+                Helpers.mouseUp(pos, otherSelectionArea);
+                break;
+        }
+        Renderer.drawOtherMouse(pos);
+        Renderer.drawSelectionArea(otherSelectionDiv, otherSelectionArea);
     }
 
     public static getMousePosition(canvas: HTMLCanvasElement, e: MouseEvent) {
