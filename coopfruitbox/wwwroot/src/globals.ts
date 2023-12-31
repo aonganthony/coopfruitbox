@@ -16,6 +16,7 @@ let createLobbyButton: HTMLButtonElement = document.getElementById("create-lobby
 let startCoopButton: HTMLButtonElement = document.getElementById("start-coop-button") as HTMLButtonElement;
 let resetGameButton: HTMLButtonElement = document.getElementById("reset-game-button") as HTMLButtonElement;
 let playAgainButton: HTMLButtonElement = document.getElementById("play-again-button") as HTMLButtonElement;
+let clipboardCopyButton: HTMLButtonElement = document.getElementById("copy-to-clipboard-button") as HTMLButtonElement;
 
 let lobbyLinkText: HTMLElement = document.getElementById("lobby-link-text") as HTMLElement;
 let scoreText: HTMLElement = document.getElementById("score-text") as HTMLElement;

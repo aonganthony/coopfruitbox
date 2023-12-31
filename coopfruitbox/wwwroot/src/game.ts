@@ -18,6 +18,8 @@ abstract class Game {
                 let data = new HostDataObject(HostObjectType.Signal, playerSignal);
                 console.log("sending signal to client");
                 connection.invoke("SendHostData", lobbyID, JSON.stringify(data));
+                lobbyLinkText.style.display = "none";
+                clipboardCopyButton.style.display = "none";
             }
             Renderer.displayCoopStart();
         });
@@ -87,6 +89,7 @@ abstract class Game {
             (gameID: string) => {
                 lobbyID = gameID;
                 lobbyLinkText.innerText = `Invite Link: https://localhost:7140/?${lobbyID}`;
+                clipboardCopyButton.style.display = "inline";
                 startSoloButton.style.display = "none";
                 createLobbyButton.style.display = "none";
                 connection.invoke("JoinLobby", lobbyID, false);
@@ -125,4 +128,9 @@ resetGameButton.addEventListener("click", (): void => {
     } else {
         Client.resetGame();
     }
+}) 
+
+clipboardCopyButton.addEventListener("click", (): void => {
+    clipboardCopyButton.innerText = "Copied!";
+    navigator.clipboard.writeText(lobbyLinkText.innerText.slice(13));
 })

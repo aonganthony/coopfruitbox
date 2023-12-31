@@ -15,6 +15,8 @@ abstract class Host {
                     Host.resetGame();
                     break;
                 case ClientObjectType.Fruit:
+                    // TODO: client-side fruit clearing is laggy. optimize by switching 
+                    // the logic to use simple peer instead of signalr.
                     Host.clearFruit(Helpers.getFruitFromIDs(clientDataObject.fruitIDs));
                     break;
             }

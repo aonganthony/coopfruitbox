@@ -111,10 +111,10 @@ class ClientDataObject {
         this.clientObjectType = clientObjectType;
         switch (clientObjectType) {
             case ClientObjectType.Signal:
-                this.signal = <string>arg;
+                this.signal = <string> arg;
                 break;
             case ClientObjectType.Fruit:
-                this.fruitIDs = <number[]>arg;
+                this.fruitIDs = <number[]> arg;
                 break;
         }
     }
@@ -139,7 +139,7 @@ class HostDataObject {
             case HostObjectType.Signal:
                 this.signal = <string> arg1;
             case HostObjectType.ResetGame:
-                this.fruitSeed = <number[]>arg1;
+                this.fruitSeed = <number[]> arg1;
                 break;
             case HostObjectType.Fruit:
                 this.fruitIDs = <number[]> arg1;

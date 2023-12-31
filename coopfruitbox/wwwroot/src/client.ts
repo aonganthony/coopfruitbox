@@ -81,6 +81,11 @@ abstract class Client {
         let selectedScore = Helpers.sumOfFruits(selected);
         Helpers.mouseUp(pos, area);
         if (selectedScore == goal) {
+            // 1. send fruit to clear
+            // 2. host receives fruit to cleare
+            // 3. host clears the fruit
+            // 4. host sends the fruit it just cleared
+            // 5. client receives the fruit that has been cleared and clears it
             let data = new ClientDataObject(ClientObjectType.Fruit, Helpers.getIDsFromFruit(selectedFruits));
             connection.invoke("SendClientData", lobbyID, JSON.stringify(data))
         } else {

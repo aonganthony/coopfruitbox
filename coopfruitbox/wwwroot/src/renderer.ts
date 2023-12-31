@@ -2,7 +2,7 @@ abstract class Renderer {
     public static drawGame() {
         selectionArea = new MouseSelectionArea(0, 0, 0, 0, true);
         otherSelectionArea = new MouseSelectionArea(0, 0, 0, 0, true);
-        uiContainer.style.display = "inline";
+        uiContainer.style.display = "flex";
         Renderer.displayFruit();
     }
 
@@ -43,11 +43,11 @@ abstract class Renderer {
     }
 
     public static updateScore() {
-        scoreText.innerText = `${score}`;
+        scoreText.innerText = `Score: ${score}`;
     }
 
     public static updateTimer() {
-        timerText.innerText = `${time}`;
+        timerText.innerText = `Time left: ${time}`;
     }
 
     public static trackMouse() {

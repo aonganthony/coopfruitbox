@@ -4,18 +4,64 @@
 
 body {
     margin: 0;
-    background-color: #5ccb34;
+    background-color: #90d78d;
 }
 
 #overlay {
     z-index: 0;
-    width: 500px;
-    height: 550px;
-    left: 50%;
-    top: 15%;
-    border: 1px dotted gray;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
-    transform: translateX(-50%);
+}
+
+#center-div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%,-50%);
+}
+
+#overlay-text, #play-solo-button, #create-lobby-button, #start-coop-button, #play-again-button, #lobby-link-text {
+    font-family: Arial;
+    font-size: 20px;
+}
+
+#overlay-text {
+    color: white;
+    font-size: 60px;
+}
+
+#lobby-link-text {
+    color: white;
+}
+
+.button {
+    box-shadow: 3px 4px 0px 0px #1564ad;
+    background: linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
+    background-color: #79bbff;
+    border-radius: 5px;
+    border: 1px solid #337bc4;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 12px 44px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #528ecc;
+}
+
+.button:hover {
+    background: linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
+    background-color: #378de5;
+}
+
+.button:active {
+    position: relative;
+    top: 1px;
 }
 
 #canvas-container, #other-mouse-canvas, #game-canvas {
@@ -31,7 +77,7 @@ body {
     left: 50%;
     top: 10%;
     transform: translateX(-50%);
-    background: #f7ceff;
+    background: rgb(235, 235, 235);
 }
 
 #other-mouse-canvas {
@@ -39,12 +85,13 @@ body {
 }
 
 #game-canvas {
-    z-index: 2;
+    z-index: 1;
 }
 
 #selection-div, #other-selection-div {
-    z-index: 1;
+    z-index: 2;
     position: absolute;
+    opacity: 0.3;
 }
 
 #selection-div {
@@ -58,9 +105,18 @@ body {
 }
 
 #ui-container {
-    border: 1px dotted black;
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+    height: 50px;
     position: absolute;
-    left: 10%;
-    top: 85%;
+    left: 50%;
+    top: 80%;
     transform: translateX(-50%);
+}
+
+#timer-text, #score-text {
+    font-family: Arial;
+    font-size: 25px;
+    color: black;
 }

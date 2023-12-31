@@ -90,6 +90,9 @@ abstract class Helpers {
         let selectedSet = (area == selectionArea) ? selected : selectedByOther;
         if (!area.hidden) {
             area.currentPos = pos;
+            // TODO: instead of checking every fruit if theyre in the selection area, check
+            // by grabbing which rows/cols the box is in, and return all fruits within those rows/cols
+            // ex: box is covering rows 2-5 and cols 3-9. fruits highlighted are fruits[2-5][3-9]
             for (let f of fruits) {
                 if (!f.cleared && Helpers.fruitInArea(f, area)) {
                     selectedSet.add(f);
