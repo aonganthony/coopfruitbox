@@ -36,10 +36,18 @@ abstract class Renderer {
 
     public static displayGameOver() {
         // Game ended due to no time left. Show Score, High Score, and Play Again button
+        overlay.style.display = "inline";
+        overlayText.style.display = "inline";
+        overlayText.innerText = `Game over. You boxed a total of ${score} fruits!\nHigh Score: ${highScore}`
+        startCoopButton.style.display = "inline";
+        startCoopButton.innerText = "Play again";
     }
 
     public static displayDisconnect() {
         // Game ended due to other player disconnecting.
+        overlay.style.display = "inline";
+        overlayText.style.display = "inline";
+        overlayText.innerText = `Other player has disconnected.`
     }
 
     public static updateScore() {
@@ -54,6 +62,12 @@ abstract class Renderer {
         onmousedown = function (e) { Helpers.sendCursor(e, MouseEventType.Down); }
         onmousemove = function (e) { Helpers.sendCursor(e, MouseEventType.Move); }
         onmouseup = function (e) { Helpers.sendCursor(e, MouseEventType.Up); }
+    }
+
+    public static stopTracking() {
+        onmousedown = null;
+        onmousemove = null;
+        onmouseup = null;
     }
 
     public static drawSelectionArea(div: HTMLCanvasElement, area: MouseSelectionArea) {

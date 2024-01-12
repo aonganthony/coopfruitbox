@@ -22,6 +22,9 @@ abstract class Client {
                 case HostObjectType.GameState:
                     Client.updateGameState(hostDataObject.score, hostDataObject.time);
                     break;
+                case HostObjectType.GameOver:
+                    Game.gameOver();
+                    break;
             }
         });
     }
@@ -43,6 +46,9 @@ abstract class Client {
         p.on('data', data => {
             Helpers.receiveCursor(JSON.parse(data));
         })
+        p.on('close', () => {
+            Renderer.displayDisconnect();
+        });
     }
 
     public static receiveSignal(signal: string) {

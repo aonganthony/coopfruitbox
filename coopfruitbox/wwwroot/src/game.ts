@@ -81,6 +81,8 @@ abstract class Game {
     }
 
     public static gameOver() {
+        highScore = Math.max(score, highScore);
+        Renderer.stopTracking();
         Renderer.displayGameOver();
     }
 

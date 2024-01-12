@@ -39,6 +39,10 @@ abstract class Host {
         p.on('data', data => {
             Helpers.receiveCursor(JSON.parse(data));
         })
+
+        p.on('close', () => {
+            Renderer.displayDisconnect();
+        });
     }
 
     public static receiveSignal(signal: string) {
@@ -117,7 +121,7 @@ abstract class Host {
         Renderer.updateTimer();
         if (time <= 0) {
             Helpers.resetTimer();
-            Game.gameOver();
+            Host.gameOver();
         } else {
             time -= 1;
         }

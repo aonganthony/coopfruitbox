@@ -1,11 +1,11 @@
 let connection: any;
 let lobbyID: string = "default";
-let startTime: number = 120;
+let startTime: number = 5;
 let time: number;
 let score: number = 0;
 let timerInterval: any;
 let playerIsHost: boolean = false;
-let highScore: number;
+let highScore: number = 0;
 let p: SimplePeer;
 let playerSignal: string;
 

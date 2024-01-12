@@ -120,6 +120,7 @@ abstract class Helpers {
     }
 
     public static startCountdown() {
+        startCoopButton.style.display = "none";
         startSoloButton.style.display = "none";
         createLobbyButton.style.display = "none";
         time = 3;
