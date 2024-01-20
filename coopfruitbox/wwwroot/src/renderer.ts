@@ -59,9 +59,9 @@ abstract class Renderer {
     }
 
     public static trackMouse() {
-        onmousedown = function (e) { Helpers.sendCursor(e, MouseEventType.Down); }
-        onmousemove = function (e) { Helpers.sendCursor(e, MouseEventType.Move); }
-        onmouseup = function (e) { Helpers.sendCursor(e, MouseEventType.Up); }
+        onmousedown = function (e) { Helpers.handleCursor(e, MouseEventType.Down); }
+        onmousemove = function (e) { Helpers.handleCursor(e, MouseEventType.Move); }
+        onmouseup = function (e) { Helpers.handleCursor(e, MouseEventType.Up); }
     }
 
     public static stopTracking() {

@@ -1,5 +1,5 @@
 abstract class Helpers {
-    public static sendCursor(e: MouseEvent, type: MouseEventType) {
+    public static handleCursor(e: MouseEvent, type: MouseEventType) {
         let pos = Helpers.getMousePosition(canvasContainer, e);
         switch (type) {
             case MouseEventType.Down:
@@ -9,7 +9,9 @@ abstract class Helpers {
                 Helpers.mouseMove(pos, selectionArea);
                 break;
             case MouseEventType.Up:
-                if (playerIsHost) {
+                if (playingSolo) {
+                    Solo.mouseUp(pos, selectionArea);
+                } else if (playerIsHost) {
                     Host.mouseUp(pos, selectionArea);
                 } else {
                     Client.mouseUp(pos, selectionArea);
@@ -17,7 +19,9 @@ abstract class Helpers {
                 break;
         }
         Renderer.drawSelectionArea(selectionDiv, selectionArea);
-        p.send(JSON.stringify(new Cursor(pos, type)));
+        if (!playingSolo) {
+            p.send(JSON.stringify(new Cursor(pos, type)));
+        }
     }
 
     public static receiveCursor(cursor: Cursor) {

@@ -47,8 +47,10 @@ abstract class Game {
         selectedByOther = new Set();
         score = 0;
         Helpers.resetTimer();
-        if (playerIsHost) {
-            Host.startGameTimer()
+        if (playingSolo) {
+            Solo.startGameTimer();
+        } else if (playerIsHost) {
+            Host.startGameTimer();
         }
         Game.createFruits(seed);
         Renderer.drawGame();
@@ -101,22 +103,34 @@ abstract class Game {
     }
 }
 
-startSoloButton.addEventListener("click", Game.resetGame); // add dedicated method for playing alone
+startSoloButton.addEventListener("click", (): void => {
+    playingSolo = true;
+    Solo.resetGame();
+}); 
 
 createLobbyButton.addEventListener("click", Game.createLobby)
 
 startCoopButton.addEventListener("click", (): void => {
-    if (playerIsHost) {
+    if (playingSolo) {
+        Solo.resetGame();
+    } else if (playerIsHost) {
         Host.startCountdown();
     } else {
         Client.startCountdown();
     }
 })
 
+clipboardCopyButton.addEventListener("click", (): void => {
+    clipboardCopyButton.innerText = "Copied!";
+    navigator.clipboard.writeText(lobbyLinkText.innerText.slice(13));
+})
+
 playAgainButton.addEventListener("click", (): void => {
     // TODO: setup endGame menu that shows score, time left, play again button
     // only 1 player is required to activate playAgain button
-    if (playerIsHost) {
+    if (playingSolo) {
+        Solo.resetGame();
+    } else if (playerIsHost) {
         Host.resetGame();
     } else {
         Client.resetGame();
@@ -125,14 +139,11 @@ playAgainButton.addEventListener("click", (): void => {
 
 resetGameButton.addEventListener("click", (): void => {
     // TODO: make it so that both players need to click reset in order for game to reset
-    if (playerIsHost) {
+    if (playingSolo) {
+        Solo.resetGame();
+    } else if (playerIsHost) {
         Host.resetGame();
     } else {
         Client.resetGame();
     }
 }) 
-
-clipboardCopyButton.addEventListener("click", (): void => {
-    clipboardCopyButton.innerText = "Copied!";
-    navigator.clipboard.writeText(lobbyLinkText.innerText.slice(13));
-})

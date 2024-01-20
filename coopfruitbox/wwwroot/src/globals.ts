@@ -5,6 +5,7 @@ let time: number;
 let score: number = 0;
 let timerInterval: any;
 let playerIsHost: boolean = false;
+let playingSolo: boolean = false;
 let highScore: number = 0;
 let p: SimplePeer;
 let playerSignal: string;
