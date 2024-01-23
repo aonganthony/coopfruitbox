@@ -1,4 +1,8 @@
 abstract class Helpers {
+    public static randomIntFromRange(min: number, max: number) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
     public static handleCursor(e: MouseEvent, type: MouseEventType) {
         let pos = Helpers.getMousePosition(canvasContainer, e);
         switch (type) {

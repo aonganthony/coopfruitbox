@@ -50,6 +50,8 @@ class Fruit {
     public value: number;
     public x: number;
     public y: number;
+    public dx: number;
+    public dy: number;
     public id: number;
     public cleared: boolean;
     public defaultImage: HTMLImageElement;
@@ -58,6 +60,8 @@ class Fruit {
         this.value = value;
         this.x = x;
         this.y = y;
+        this.dx = 0; // random int
+        this.dy = 0;
         this.id = id;
         this.cleared = false;
         this.defaultImage = apple_images[value - 1];
@@ -77,9 +81,34 @@ class Fruit {
         gameCanvasContext.drawImage(this.defaultImage, this.x, this.y, fruit_radius, fruit_radius);
     }
 
+    public update() {
+        this.dy += gravity;
+        this.x += this.dx;
+        this.y += this.dy;
+    }
+
     public clear() {
-        gameCanvasContext.clearRect(this.x, this.y, fruit_radius, fruit_radius);
         this.cleared = true;
+        this.dx = Helpers.randomIntFromRange(1, 5.5) * ((Math.round(Math.random())) ? 1 : -1);
+        this.dy = Helpers.randomIntFromRange(-10, -5);
+        gameCanvasContext.clearRect(this.x, this.y, fruit_radius, fruit_radius);
+        this.animateFall();
+    }
+
+    public animateFall() {
+        if (this.y > gameCanvas.height) {
+            return;
+        }
+        fruitFallCanvasContext.clearRect(this.x, this.y, fruit_radius, fruit_radius);
+        fruitFallCanvasContext.save();
+        this.update();
+        let angle = (this.dx > 0) ? 30 : -30;
+        fruitFallCanvasContext.translate(this.x, this.y);
+        fruitFallCanvasContext.translate(fruit_radius / 2 , fruit_radius / 2);
+        fruitFallCanvasContext.rotate(angle * TO_RADIANS);
+        fruitFallCanvasContext.drawImage(this.defaultImage, -(fruit_radius / 2), -(fruit_radius / 2), fruit_radius, fruit_radius);
+        fruitFallCanvasContext.restore();
+        requestAnimationFrame(this.animateFall.bind(this));
     }
 }
 

@@ -1,6 +1,6 @@
 let connection: any;
 let lobbyID: string = "default";
-let startTime: number = 5;
+let startTime: number = 120;
 let time: number;
 let score: number = 0;
 let timerInterval: any;
@@ -36,11 +36,19 @@ let gameCanvasContext: CanvasRenderingContext2D = gameCanvas.getContext("2d") as
 gameCanvas.width = gameCanvas.offsetWidth;
 gameCanvas.height = gameCanvas.offsetHeight;
 
+let fruitFallCanvas: HTMLCanvasElement = document.getElementById("fruit-fall-canvas") as HTMLCanvasElement;
+let fruitFallCanvasContext: CanvasRenderingContext2D = fruitFallCanvas.getContext("2d") as CanvasRenderingContext2D;
+fruitFallCanvas.width = fruitFallCanvas.offsetWidth;
+fruitFallCanvas.height = fruitFallCanvas.offsetHeight;
+
 let selectionDiv: HTMLCanvasElement = document.getElementById('selection-div') as HTMLCanvasElement;
 let selectionArea: MouseSelectionArea;
 
 let otherSelectionDiv: HTMLCanvasElement = document.getElementById('other-selection-div') as HTMLCanvasElement;
 let otherSelectionArea: MouseSelectionArea;
+
+let popSound: HTMLAudioElement = new Audio('pop.wav');
+popSound.volume = 0.5;
 
 let cursorImage: HTMLImageElement = new Image();
 cursorImage.src = "images/cursor.png";
@@ -78,3 +86,6 @@ let seed: number[] = [];
 let fruits: Fruit[] = [];
 let selected: Set<Fruit> = new Set();
 let selectedByOther: Set<Fruit> = new Set();
+
+let gravity = 0.2;
+const TO_RADIANS = Math.PI / 180; 

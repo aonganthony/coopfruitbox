@@ -13,16 +13,17 @@ abstract class Solo {
         let selectedScore = Helpers.sumOfFruits(selected);
         Helpers.mouseUp(pos, area);
         if (selectedScore == goal) {
-            Solo.clearFruit(selectedFruits);
+            Solo.clearFruit(Helpers.getIDsFromFruit(selectedFruits));
         } else {
             selectedFruits.forEach(Helpers.highlightFruit);
         }
     }
 
-    public static clearFruit(fruitsToClear: Fruit[]) {
-        for (const f of fruitsToClear) {
-            if (!fruits[f.id].cleared) {
-                fruits[f.id].clear();
+    public static clearFruit(fruitIDsToClear: number[]) {
+        popSound.play();
+        for (const id of fruitIDsToClear) {
+            if (!fruits[id].cleared) {
+                fruits[id].clear();
                 score += 1;
             }
         }

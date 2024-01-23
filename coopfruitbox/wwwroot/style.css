@@ -66,7 +66,7 @@ body {
     top: 1px;
 }
 
-#canvas-container, #other-mouse-canvas, #game-canvas {
+#canvas-container, #other-mouse-canvas, #fruit-fall-canvas, #game-canvas {
     width: 1000px;
     height: 600px;
     position: absolute;
@@ -83,18 +83,23 @@ body {
 }
 
 #other-mouse-canvas {
+    z-index: 4;
+}
+
+#selection-div, #other-selection-div {
     z-index: 3;
+    position: absolute;
+    opacity: 0.3;
+}
+
+#fruit-fall-canvas {
+    z-index: 2;
 }
 
 #game-canvas {
     z-index: 1;
 }
 
-#selection-div, #other-selection-div {
-    z-index: 2;
-    position: absolute;
-    opacity: 0.3;
-}
 
 #selection-div {
     background-color: lightblue;

@@ -17,7 +17,7 @@ abstract class Client {
                     Game.resetGame();
                     break;
                 case HostObjectType.Fruit:
-                    Client.clearFruit(Helpers.getFruitFromIDs(hostDataObject.fruitIDs));
+                    Client.clearFruit(hostDataObject.fruitIDs);
                     break;
                 case HostObjectType.GameState:
                     Client.updateGameState(hostDataObject.score, hostDataObject.time);
@@ -99,10 +99,10 @@ abstract class Client {
         }
     }
 
-    public static clearFruit(fruitsToClear: Fruit[]) {
-        for (const f of fruitsToClear) {
-            if (!fruits[f.id].cleared) {
-                fruits[f.id].clear();
+    public static clearFruit(fruitIDsToClear: number[]) {
+        for (const id of fruitIDsToClear) {
+            if (!fruits[id].cleared) {
+                fruits[id].clear();
             }
         }
     }

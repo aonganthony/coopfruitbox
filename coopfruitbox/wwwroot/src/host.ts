@@ -17,7 +17,7 @@ abstract class Host {
                 case ClientObjectType.Fruit:
                     // TODO: client-side fruit clearing is laggy. optimize by switching 
                     // the logic to use simple peer instead of signalr.
-                    Host.clearFruit(Helpers.getFruitFromIDs(clientDataObject.fruitIDs));
+                    Host.clearFruit(clientDataObject.fruitIDs);
                     break;
             }
         });
@@ -85,20 +85,21 @@ abstract class Host {
         let selectedScore = Helpers.sumOfFruits(selected);
         Helpers.mouseUp(pos, area);
         if (selectedScore == goal) {
-            Host.clearFruit(selectedFruits);
+            Host.clearFruit(Helpers.getIDsFromFruit(selectedFruits));
         } else {
             selectedFruits.forEach(Helpers.highlightFruit);
         }
     }
 
-    public static clearFruit(fruitsToClear: Fruit[]) {
-        for (const f of fruitsToClear) {
-            if (!fruits[f.id].cleared) {
-                fruits[f.id].clear();
+    public static clearFruit(fruitIDsToClear: number[]) {
+        popSound.play();
+        for (const id of fruitIDsToClear) {
+            if (!fruits[id].cleared) {
+                fruits[id].clear();
                 score += 1;
             }
         }
-        let data = new HostDataObject(HostObjectType.Fruit, Helpers.getIDsFromFruit(fruitsToClear));
+        let data = new HostDataObject(HostObjectType.Fruit, fruitIDsToClear);
         connection.invoke("SendHostData", lobbyID, JSON.stringify(data));
         data = new HostDataObject(HostObjectType.GameState, score, time);
         connection.invoke("SendHostData", lobbyID, JSON.stringify(data));
