@@ -23,20 +23,33 @@ body {
     transform: translate(-50%,-50%);
 }
 
-#overlay-text, #play-solo-button, #create-lobby-button, #start-coop-button, #play-again-button, #lobby-link-text {
+#overlay-title, #play-solo-button, #create-lobby-button, #start-coop-button, #play-again-button, #overlay-descriptor {
     font-family: Arial;
     font-size: 20px;
 }
 
-#overlay-text {
+#overlay-title {
+    margin: 25px;
     color: white;
     font-size: 60px;
     text-shadow: 4px 4px 18px rgba(0,0,0,1);
+    
 }
 
-#lobby-link-text {
+#overlay-descriptor, #timer-text, #score-text {
+    margin: 25px;
     color: white;
     text-shadow: 4px 4px 16px rgba(0,0,0,1);
+}
+
+#tutorial-vid {
+    margin: 10px;
+}
+
+#timer-text, #score-text {
+    font-family: Arial;
+    font-size: 25px;
+    color: white;
 }
 
 .button {
@@ -122,8 +135,4 @@ body {
     transform: translateX(-50%);
 }
 
-#timer-text, #score-text {
-    font-family: Arial;
-    font-size: 25px;
-    color: black;
-}
+

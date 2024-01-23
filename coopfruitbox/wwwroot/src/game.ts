@@ -18,7 +18,7 @@ abstract class Game {
                 let data = new HostDataObject(HostObjectType.Signal, playerSignal);
                 console.log("sending signal to client");
                 connection.invoke("SendHostData", lobbyID, JSON.stringify(data));
-                lobbyLinkText.style.display = "none";
+                overlayDescriptor.style.display = "none";
                 clipboardCopyButton.style.display = "none";
             }
             Renderer.displayCoopStart();
@@ -30,7 +30,7 @@ abstract class Game {
     }
 
     public static checkURLforLobbyID(): boolean {
-        var delimiterValue = window.location.search.substring(1);
+        let delimiterValue = window.location.search.substring(1);
         if (delimiterValue.length == 8) { // TODO: verify lobby exists, protect against sql injection
             lobbyID = delimiterValue;
             connection.invoke("JoinLobby", lobbyID, true);
@@ -70,8 +70,8 @@ abstract class Game {
 
     // Initializes fruit objects from seed and stores list in global variable.
     public static createFruits(seed: number[]) {
-        let xOffset = 0;
-        let yOffset = 0;
+        let xOffset = 65;
+        let yOffset = 50;
         let c = 0;
         for (let i = 0; i < num_rows; i++) {
             for (let j = 0; j < num_cols; j++) {
@@ -92,7 +92,7 @@ abstract class Game {
         connection.invoke("CreateLobby").then(
             (gameID: string) => {
                 lobbyID = gameID;
-                lobbyLinkText.innerText = `Invite Link: https://localhost:7140/?${lobbyID}`;
+                overlayDescriptor.innerText = `Invite Link: https://localhost:7140/?${lobbyID}`;
                 clipboardCopyButton.style.display = "inline";
                 startSoloButton.style.display = "none";
                 createLobbyButton.style.display = "none";
@@ -122,7 +122,7 @@ startCoopButton.addEventListener("click", (): void => {
 
 clipboardCopyButton.addEventListener("click", (): void => {
     clipboardCopyButton.innerText = "Copied!";
-    navigator.clipboard.writeText(lobbyLinkText.innerText.slice(13));
+    navigator.clipboard.writeText(overlayDescriptor.innerText.slice(13));
 })
 
 playAgainButton.addEventListener("click", (): void => {

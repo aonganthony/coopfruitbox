@@ -7,12 +7,14 @@ abstract class Renderer {
     }
 
     public static displayMainMenu() {
+        overlayDescriptor.innerText = "Get points by selecting groups of apples that sum to 10. \nPicking certain groups of apples before others can give higher scores!";
         startSoloButton.style.display = 'inline';
         createLobbyButton.style.display = 'inline';
     }
 
     public static hideOverlay() {
         overlay.style.display = "none";
+        overlayDescriptor.innerText = "";
     }
 
     public static displayCoopStart() {
