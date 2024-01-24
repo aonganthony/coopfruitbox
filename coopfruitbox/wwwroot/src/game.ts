@@ -92,11 +92,8 @@ abstract class Game {
         connection.invoke("CreateLobby").then(
             (gameID: string) => {
                 lobbyID = gameID;
-                overlayDescriptor.innerText = `Invite Link: https://localhost:7140/?${lobbyID}`;
-                clipboardCopyButton.style.display = "inline";
-                startSoloButton.style.display = "none";
-                createLobbyButton.style.display = "none";
                 connection.invoke("JoinLobby", lobbyID, false);
+                Renderer.displayLobbyLink();
             });
         playerIsHost = true;
         Host.setupConnection();

@@ -7,14 +7,24 @@ abstract class Renderer {
     }
 
     public static displayMainMenu() {
-        overlayDescriptor.innerText = "Get points by selecting groups of apples that sum to 10. \nPicking certain groups of apples before others can give higher scores!";
+        overlayDescriptor.innerText = "Select groups of apples with your cursor. Apples get cleared if the selection sums to 10.\nStrategically choose which groups of apples to clear first as they affect future moves.\nBe fast and plan ahead to maximize your score!\n\nPlay solo or with a friend.";
         startSoloButton.style.display = 'inline';
         createLobbyButton.style.display = 'inline';
-    }
+        tutorialVid.style.display = "inline";
+    }//A version of Fruit Box that includes a 2 player coop mode. Fruit Box originally made by GameSaien.
 
     public static hideOverlay() {
         overlay.style.display = "none";
         overlayDescriptor.innerText = "";
+        tutorialVid.style.display = "none";
+    }
+
+    public static displayLobbyLink() {
+        overlayDescriptor.innerText = `Invite Link: https://localhost:7140/?${lobbyID}`;
+        clipboardCopyButton.style.display = "inline";
+        startSoloButton.style.display = "none";
+        createLobbyButton.style.display = "none";
+        tutorialVid.style.display = "none";
     }
 
     public static displayCoopStart() {

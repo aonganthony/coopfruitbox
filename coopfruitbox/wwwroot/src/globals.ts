@@ -19,6 +19,7 @@ let resetGameButton: HTMLButtonElement = document.getElementById("reset-game-but
 let playAgainButton: HTMLButtonElement = document.getElementById("play-again-button") as HTMLButtonElement;
 let clipboardCopyButton: HTMLButtonElement = document.getElementById("copy-to-clipboard-button") as HTMLButtonElement;
 
+let tutorialVid: HTMLElement = document.getElementById("tutorial-vid") as HTMLElement;
 let overlayText: HTMLElement = document.getElementById("overlay-title") as HTMLElement;
 let overlayDescriptor: HTMLElement = document.getElementById("overlay-descriptor") as HTMLElement;
 let scoreText: HTMLElement = document.getElementById("score-text") as HTMLElement;
